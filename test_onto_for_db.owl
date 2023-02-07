@@ -1,0 +1,704 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/test_complete.owl#"
+     xml:base="http://www.semanticweb.org/test_complete.owl"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:swrl2="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/test_complete.owl">
+        <python_module>test</python_module>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled -->
+
+    <owl:AnnotationProperty rdf:about="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#python_module -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/test_complete.owl#python_module"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#acquired_by_studying -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/test_complete.owl#acquired_by_studying">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/test_complete.owl#develops"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+        <rdfs:label>приобретается при изучении</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#acquires -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/test_complete.owl#acquires">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+        <rdfs:label>приобретает</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#builds -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/test_complete.owl#builds">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/test_complete.owl#Trajectory"/>
+        <rdfs:label>строит</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#chooses -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/test_complete.owl#chooses">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+        <rdfs:label>выбирает</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#contains -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/test_complete.owl#contains">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Trajectory"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+        <rdfs:label>содержит</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#develops -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/test_complete.owl#develops">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+        <rdfs:label>вырабатывает</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#forms -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/test_complete.owl#forms">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/test_complete.owl#Speciality"/>
+        <rdfs:label>формирует</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#leads -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/test_complete.owl#leads">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Trajectory"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/test_complete.owl#Speciality"/>
+        <rdfs:label>ведёт</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#seeks -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/test_complete.owl#seeks">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/test_complete.owl#Speciality"/>
+        <rdfs:label>стремится</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#full_name -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/test_complete.owl#full_name">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>ФИО</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#has_code -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/test_complete.owl#has_code">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Speciality"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>имеет код</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#is_a_obj -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/test_complete.owl#is_a_obj">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>является</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#record_book_number -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/test_complete.owl#record_book_number">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>номер зачётной книжки</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#refers_to -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/test_complete.owl#refers_to">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>относится к</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#taught_per_semester -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/test_complete.owl#taught_per_semester">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:label>преподаётся в семестре</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#Basic_discipline -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/test_complete.owl#Basic_discipline">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                        <owl:hasValue>basic</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                        <owl:hasValue>basic</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                <owl:hasValue>basic</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Базовая дисциплина</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#Competence -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/test_complete.owl#Competence">
+        <rdfs:label>Компетенция</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#Discipline -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline">
+        <rdfs:label>Дисциплина</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#Elective_discipline -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/test_complete.owl#Elective_discipline">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                        <owl:hasValue>elective</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                        <owl:hasValue>elective</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                <owl:hasValue>elective</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label>Элективная дисциплина</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#General_professional_competence -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/test_complete.owl#General_professional_competence">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                        <owl:hasValue>general_professional</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                        <owl:hasValue>general_professional</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:label>Общепрофессиональная компетенция</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#Professional_competence -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/test_complete.owl#Professional_competence">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                        <owl:hasValue>professional</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                        <owl:hasValue>professional</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:label>Профессиональная компетенция</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#Speciality -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/test_complete.owl#Speciality">
+        <rdfs:label>Специальность</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#Student -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/test_complete.owl#Student">
+        <rdfs:label>Студент</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#Trajectory -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/test_complete.owl#Trajectory">
+        <rdfs:label>Траектория</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/test_complete.owl#Universal_competence -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/test_complete.owl#Universal_competence">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                        <owl:hasValue>universal</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                        <owl:hasValue>universal</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:label>Универсальная компетенция</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                <owl:hasValue>general_professional</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                <owl:hasValue>general_professional</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#General_professional_competence"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                <owl:hasValue>professional</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                <owl:hasValue>professional</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Professional_competence"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                <owl:hasValue>universal</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Competence"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Competence"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#refers_to"/>
+                <owl:hasValue>universal</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Universal_competence"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                <owl:hasValue>basic</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Basic_discipline"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                <owl:hasValue>basic</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                <owl:hasValue>basic</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                <owl:hasValue>basic</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                <owl:hasValue>elective</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                <owl:hasValue>elective</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/test_complete.owl#Elective_discipline"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/test_complete.owl#Discipline"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                <owl:hasValue>elective</owl:hasValue>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/test_complete.owl#is_a_obj"/>
+                <owl:hasValue>elective</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Rules
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#x">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#y">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#z">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#t">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description>
+        <swrl2:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrl2:isRuleEnabled>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">S2</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.semanticweb.org/test_complete.owl#chooses"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#x"/>
+                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#y"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.semanticweb.org/test_complete.owl#contains"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#z"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#y"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.semanticweb.org/test_complete.owl#leads"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#z"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#t"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.semanticweb.org/test_complete.owl#seeks"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#x"/>
+                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#t"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrl2:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrl2:isRuleEnabled>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">S1</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.semanticweb.org/test_complete.owl#chooses"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#x"/>
+                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#y"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.semanticweb.org/test_complete.owl#contains"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#z"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#y"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.semanticweb.org/test_complete.owl#builds"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#x"/>
+                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/ди/ontologies/2021/2/untitled-ontology-8#z"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
