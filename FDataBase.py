@@ -1,8 +1,7 @@
-import Connection as cn
 import json
 from owlready2 import *
-import MyOntology
 from psycopg2 import OperationalError
+import MyOntology
 
 with open('data.json', encoding='utf-8') as json_file:
     dictionary = json.load(json_file)
@@ -87,4 +86,37 @@ class FDataBase:
         return trajectory_disc
 
     def getUser(self, user_id):
-        pass
+        try:
+            self.__cur.execute(f"SELECT user_id, login, role_id FROM users WHERE user_id = {user_id} LIMIT 1")
+            res = self.__cur.fetchone()
+            if not res:
+                print('Пользователь не найден')
+                return False
+            return res
+        except OperationalError as e:
+            print(f"Ошибка получения данных '{e}'")
+        return False
+
+    def getFullName(self, user_id):
+        try:
+            self.__cur.execute(f"SELECT record_book_number, full_name, user_id FROM student WHERE user_id = {user_id}")
+            res = self.__cur.fetchone()
+            if not res:
+                print('Пользователь не найден')
+                return False
+            return res
+        except OperationalError as e:
+            print(f"Ошибка получения данных '{e}'")
+        return False
+
+    def getUserByLogin(self, login):
+        try:
+            self.__cur.execute(f"SELECT * FROM users WHERE login = '{login}' LIMIT 1")
+            res = self.__cur.fetchone()
+            if not res:
+                print('Пользователь не найден')
+                return False
+            return res
+        except OperationalError as e:
+            print(f"Ошибка получения данных '{e}'")
+        return False
