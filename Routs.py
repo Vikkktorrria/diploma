@@ -21,10 +21,20 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    return render_template('index.html', title='Диплом', disciplines = dbase.get_all_disciplines())
-    #if 'username' in session:
-        #return f'Logged in as {session["username"]}'
-    #return 'You are not logged in'
+    return render_template('index.html')
+
+
+@app.route('/discipline/')
+def discipline():
+    if request.method == 'GET':
+        return render_template('discipline.html', disciplines = dbase.get_all_disciplines())
+    if request.method == 'POST':
+        print('запустился пост метод')
+        result = request.form.getlist('my_checkbox')  # выбранные дисциплины
+        print(result)
+        trajectories = dbase.get_trajectory(result) # полученные траектории
+        print(trajectories)
+        return render_template('trajectory.html', trajectories=trajectories)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -35,7 +45,6 @@ def login():
         if user and check_password_hash(user[2], request.form['psw']):
             userLogin = UserLogin().create(user)
             login_user(userLogin)
-            flash("Вы успешно вошли!", "succes")
             return redirect(url_for('profile'))
         flash("Неверная пара логин/пароль", "error")
     return render_template("login.html")
@@ -56,15 +65,6 @@ def profile():
 
 
 
-@app.route('/', methods=['GET', 'POST'])
-def choice_of_disciplines():
-    if request.method == 'POST':
-        result = request.form.getlist('my_checkbox')  # выбранные дисциплины
-        print(result)
-        trajectories = dbase.get_trajectory(result) # полученные траектории
-        print(trajectories)
-
-    return render_template('trajectory.html', trajectories=trajectories)
 
 
 @app.route('/trajectory', methods=['GET'])

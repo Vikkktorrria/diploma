@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' -%}
 <head>
     <link rel="stylesheet" href="static/style.css">
     <meta charset="UTF-8">
     <title>{{title}}</title>
 </head>
 <body>
-<form action="" method="POST">
+    {% block content -%}
+    {{super()}}
 
+    {% endblock -%}
 
-
-        <div class="disciplines_check">
-              {% for item in disciplines %}
-            {{item}}<input type="checkbox" value = '{{item}}' name="my_checkbox"><br>
-                    {% endfor %}
-            <button name="page" value="main" type="submit">Сохранить дисциплины</button>
-      </div>
-
-
-
-</form>
 
 </body>
 </html>

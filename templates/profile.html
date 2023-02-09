@@ -1,10 +1,14 @@
-<!DOCTYPE html>
+{% extends 'base.html' -%}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<body>
+    {% block content -%}
+    {{super()}}
 
+    {% endblock -%}
 </body>
 </html>
