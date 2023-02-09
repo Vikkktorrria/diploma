@@ -2,6 +2,7 @@ import json
 from owlready2 import *
 from psycopg2 import OperationalError
 import MyOntology
+from flask_login import current_user
 
 with open('data.json', encoding='utf-8') as json_file:
     dictionary = json.load(json_file)
@@ -55,7 +56,6 @@ class FDataBase:
                                   full_name=['Копыльских Виктория Максимовна'],
                                   record_book_number=[2345552])
         stud.label = locstr('Студент 2', lang="ru")
-        print('ебучая моча', stud)
         owlready2.sync_reasoner_pellet()  # запуск решателя
 
         for choos_disc in chosen_discipline:
@@ -78,11 +78,11 @@ class FDataBase:
             for disc in stud_trajec.contains:
                 cont_disc_list.append(str(disc.label[0]))
             trajectory_disc[str(stud_trajec.label[0])] = cont_disc_list  # траектория и предметы в траектории
-        print(trajectory_disc)
-        for item in trajectory_disc:
-            print(item, trajectory_disc[item])
+        #print(trajectory_disc)
+        #for item in trajectory_disc:
+            #print(item, trajectory_disc[item])
 
-        MyOntology.onto.save('test_onto_for_db_for_change.owl')  # куда сохранить онтологию
+        #MyOntology.onto.save('test_onto_for_db_for_change.owl')  # куда сохранить онтологию
         return trajectory_disc
 
     def getUser(self, user_id):
