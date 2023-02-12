@@ -110,10 +110,10 @@ for trj in trajectory_result:
     trajec_id = trj[0]
     spec_code = trj[1]
     spec_name = trj[2]
-    trajec_name = 'Trajectory_' + str(trajec_id)
+    #trajec_name = 'Trajectory_' + str(trajec_id)
 
     special = MyOntology.Speciality(MyOntology.get_key(dictionary, spec_name), None, has_code=[spec_code])
-    traject = MyOntology.Trajectory(trajec_name, None, leads=[special])
+    traject = MyOntology.Trajectory(str(trajec_id), None, leads=[special])
     special.label = locstr(spec_name, lang="ru")
     traject.label = locstr('Траектория ' + str(trajec_id), lang="ru")
 
@@ -132,7 +132,7 @@ for trj in MyOntology.Trajectory.instances():
     for item in elective_disc_in_tr_result:
         disc_name = item[0]
         tr_id = item[1]
-        if trj.name == 'Trajectory_' + str(tr_id):
+        if trj.name == str(tr_id):  # здесь изменила имя траекторий просто на цифру
             for ds in MyOntology.Discipline.instances():
                 if ds.name == MyOntology.get_key(dictionary, disc_name):
                     trj.contains.append(ds)
@@ -141,7 +141,7 @@ for trj in MyOntology.Trajectory.instances():
     for item in basic_disc_in_tr_result:
         disc_name = item[0]
         tr_id = item[1]
-        if trj.name == 'Trajectory_' + str(tr_id):
+        if trj.name == str(tr_id):   # здесь изменила имя траекторий просто на цифру
             for ds in MyOntology.Discipline.instances():
                 if ds.name == MyOntology.get_key(dictionary, disc_name):
                     trj.contains.append(ds)

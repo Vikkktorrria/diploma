@@ -22,3 +22,9 @@ class UserLogin():
 
     def get_name(self):
         return str(self.__uname[1])
+
+    def get_record_book_number(self):
+        return str(self.__uname[0])
+
+    def get_role(self):
+        return str(self.__user[3])

@@ -1250,7 +1250,7 @@
   <rdfs:label xml:lang="ru">Программист</rdfs:label>
 </Speciality>
 
-<Trajectory rdf:about="#Trajectory_1">
+<Trajectory rdf:about="#1">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <leads rdf:resource="#Programmer"/>
   <contains rdf:resource="#Object-oriented_programming"/>
@@ -1307,7 +1307,7 @@
   <rdfs:label xml:lang="ru">Системный аналитик</rdfs:label>
 </Speciality>
 
-<Trajectory rdf:about="#Trajectory_2">
+<Trajectory rdf:about="#2">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <leads rdf:resource="#Systems_analyst"/>
   <contains rdf:resource="#Systems_modeling"/>
@@ -1360,7 +1360,7 @@
   <rdfs:label xml:lang="ru">Специалист по дизайну графических и пользовательских интерфейсов</rdfs:label>
 </Speciality>
 
-<Trajectory rdf:about="#Trajectory_3">
+<Trajectory rdf:about="#3">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <leads rdf:resource="#Graphic_and_user_interface_designer"/>
   <contains rdf:resource="#Software_engineering"/>
@@ -1418,7 +1418,7 @@
   <rdfs:label xml:lang="ru">Системный программист</rdfs:label>
 </Speciality>
 
-<Trajectory rdf:about="#Trajectory_4">
+<Trajectory rdf:about="#4">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <leads rdf:resource="#System_programmer"/>
   <contains rdf:resource="#OS"/>
@@ -1468,7 +1468,7 @@
   <rdfs:label xml:lang="ru">Администратор баз данных</rdfs:label>
 </Speciality>
 
-<Trajectory rdf:about="#Trajectory_5">
+<Trajectory rdf:about="#5">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <leads rdf:resource="#Database_administrator"/>
   <contains rdf:resource="#Database"/>
@@ -1518,7 +1518,7 @@
   <rdfs:label xml:lang="ru">Технический писатель (специалист по технической документации в области информационных технологий)</rdfs:label>
 </Speciality>
 
-<Trajectory rdf:about="#Trajectory_6">
+<Trajectory rdf:about="#6">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <leads rdf:resource="#Technical_writer"/>
   <contains rdf:resource="#Design_of_automated_information_systems"/>
@@ -1574,7 +1574,7 @@
   <rdfs:label xml:lang="ru">Системный администратор информационно-коммуникационных систем</rdfs:label>
 </Speciality>
 
-<Trajectory rdf:about="#Trajectory_7">
+<Trajectory rdf:about="#7">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <leads rdf:resource="#System_administrator_of_information_and_communication_systems"/>
   <contains rdf:resource="#Fundamentals_of_control_theory"/>
@@ -1628,7 +1628,7 @@
   <rdfs:label xml:lang="ru">Специалист по администрированию сетевых устройств информационно-коммуникационных систем</rdfs:label>
 </Speciality>
 
-<Trajectory rdf:about="#Trajectory_8">
+<Trajectory rdf:about="#8">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <leads rdf:resource="#Specialist_in_the_administration_of_network_devices_of_information_and_communication_systems"/>
   <contains rdf:resource="#Corporate_networks"/>
@@ -1683,7 +1683,7 @@
   <rdfs:label xml:lang="ru">Специалист по научно-исследовательским и опытно-конструкторским разработкам</rdfs:label>
 </Speciality>
 
-<Trajectory rdf:about="#Trajectory_9">
+<Trajectory rdf:about="#9">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <leads rdf:resource="#Research_and_development_specialist"/>
   <contains rdf:resource="#Fundamentals_of_scientific_research"/>
@@ -1726,6 +1726,15 @@
   <contains rdf:resource="#Business_management_and_business_planning"/>
   <rdfs:label xml:lang="ru">Траектория 9</rdfs:label>
 </Trajectory>
+
+<Student rdf:about="#Student_2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <chooses rdf:resource="#History"/>
+  <chooses rdf:resource="#Database"/>
+  <full_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Копыльских Виктория Максимовна</full_name>
+  <record_book_number rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2345552</record_book_number>
+  <rdfs:label xml:lang="ru">Студент 2</rdfs:label>
+</Student>
 
 <swrl:Imp>
   <swrl:body>

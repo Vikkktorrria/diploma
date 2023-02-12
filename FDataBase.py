@@ -16,6 +16,8 @@ class FDataBase:
     def execute_query(self, query):  # для неселектовых запросов
         try:
             self.__cur.execute(query)
+            self.__db.commit()
+            return []
         except OperationalError as e:
             print(f"The error '{e}' occurred")
 
@@ -42,20 +44,47 @@ class FDataBase:
             print('Ошибка чтения из бд')
             return []
 
+    def get_basic_disciplines(self):  # получить все дисциплины (без семестров)
+        disciplines_query = """SELECT discipline_name
+            FROM basic_discipline;"""
+        try:
+            result = self.execute_query_select(disciplines_query)
+            result_list = []
+            for item in result:
+                result_list.append(str(item[0]))
+            return result_list
+        except:
+            print('Ошибка чтения из бд')
+            return []
+
+    def get_elective_disciplines(self):  # получить все дисциплины (без семестров)
+        disciplines_query = """SELECT discipline_name
+            FROM elective_discipline;"""
+        try:
+            result = self.execute_query_select(disciplines_query)
+            result_list = []
+            for item in result:
+                result_list.append(str(item[0]))
+            return result_list
+        except:
+            print('Ошибка чтения из бд')
+            return []
+
     def get_all_disciplines_with_semester(self):
         disciplines_query = """SELECT discipline_name, taught_per_semester
             FROM basic_discipline
             UNION SELECT discipline_name, taught_per_semester
             FROM elective_discipline
             ORDER by taught_per_semester;"""
-        disciplines_result = self.execute_query_select(disciplines_query)
+        disciplines_result = self.execute_query_select(disciplines_quФery)
         return disciplines_result
 
     def get_trajectory(self, chosen_discipline):
-        stud = MyOntology.Student('Student_2', None,
-                                  full_name=['Копыльских Виктория Максимовна'],
-                                  record_book_number=[2345552])
-        stud.label = locstr('Студент 2', lang="ru")
+        st_num = current_user.get_id()
+        stud = MyOntology.Student('Student_' + str(st_num), None,
+                                  full_name=[current_user.get_name()],
+                                  record_book_number=[int(current_user.get_record_book_number())])
+        stud.label = locstr('Студент ' + str(st_num), lang="ru")
         owlready2.sync_reasoner_pellet()  # запуск решателя
 
         for choos_disc in chosen_discipline:
@@ -70,19 +99,27 @@ class FDataBase:
                     stud.chooses.append(item)  # добавляем предметы которые выбирает
 
         owlready2.sync_reasoner_pellet(infer_property_values=True,
-                                       infer_data_property_values=True)  # запускr решателя чтоб достать траекторию
+                                       infer_data_property_values=True)  # запуск решателя чтоб достать траекторию
         trajectory_disc = {}
+        trajectory_list_for_db = []
         cont_disc_list = []
-        for stud_trajec in stud.builds:
+        for stud_trajec in stud.builds:  # траектории
             cont_disc_list.clear()
-            for disc in stud_trajec.contains:
+            for disc in stud_trajec.contains:  # дисциплины
                 cont_disc_list.append(str(disc.label[0]))
-            trajectory_disc[str(stud_trajec.label[0])] = cont_disc_list  # траектория и предметы в траектории
-        #print(trajectory_disc)
-        #for item in trajectory_disc:
-            #print(item, trajectory_disc[item])
+            trajectory_disc[str(stud_trajec.label[0])] = cont_disc_list  # траектория и предметы в траектории (было str(stud_trajec.label[0])
+            trajectory_list_for_db.append(stud_trajec.name)
 
-        #MyOntology.onto.save('test_onto_for_db_for_change.owl')  # куда сохранить онтологию
+        delete_query = f"DELETE FROM student_trajectories WHERE student_id = {current_user.get_record_book_number()}"
+        self.execute_query(delete_query)
+
+        print(trajectory_list_for_db)
+        for tr in trajectory_list_for_db:
+            query_for_insert_trajectory = f"INSERT INTO student_trajectories(student_id, trajectory_id) " \
+                                          f"VALUES ({current_user.get_record_book_number()}, {tr})"
+            self.execute_query(query_for_insert_trajectory)
+        MyOntology.onto.save('test_onto_for_db_for_change.owl')  # куда сохранить онтологию
+        destroy_entity(stud)  # удаляем сущность студента
         return trajectory_disc
 
     def getUser(self, user_id):

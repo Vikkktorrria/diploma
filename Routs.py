@@ -11,6 +11,10 @@ import UploadProtegeFile
 app = Flask(__name__)
 login_manager = LoginManager(app)
 login_manager.init_app(app)
+
+login_manager.login_view = 'login'
+login_manager.login_message = 'Прежде чем посетить данную страницу, вам необходимо авторизоваться'
+login_manager.login_message_category = "success"
 # Set the secret key to some random bytes. Keep this really secret!
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
@@ -29,62 +33,72 @@ def index():
 
 
 @app.route('/discipline', methods=['GET', 'POST'])
+@login_required
 def discipline():
     if request.method == 'GET':
-        return render_template('discipline.html', disciplines = dbase.get_all_disciplines())
+        basic_disciplines = dbase.get_basic_disciplines()
+        elective_disciplines = dbase.get_elective_disciplines()
+        return render_template('discipline.html', b_disciplines = basic_disciplines, e_disciplines = elective_disciplines)
     if request.method == 'POST':
         result = request.form.getlist('my_checkbox')  # выбранные дисциплины
         print(result)
-        trajectories = dbase.get_trajectory(result) # полученные траектории
+        trajectories = dbase.get_trajectory(result)  # полученные траектории
         result.clear()
-        print(result)
         print(trajectories)
         return render_template('trajectory.html', trajectories=trajectories)
+
+@app.route('/trajectory', methods=['GET'])
+def trajectory():
+    basic_disciplines = dbase.get_basic_disciplines()
+    elective_disciplines = dbase.get_elective_disciplines()
+    return render_template('discipline.html', b_disciplines = basic_disciplines, e_disciplines = elective_disciplines)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('profile'))
     if request.method == 'POST':
         user = dbase.getUserByLogin(request.form['login'])
         if user and check_password_hash(user[2], request.form['psw']):
             userLogin = UserLogin().create(user)
             login_user(userLogin)
-            return redirect(url_for('profile'))
+            return redirect(request.args.get("next") or url_for('profile'))
         flash("Неверная пара логин/пароль", "error")
     return render_template("login.html")
-
 
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
+    #session.clear()
     return redirect(url_for('login'))
 
+
 @app.route('/profile')
+@login_required
 def profile():
-    return render_template('profile.html', user_full_name = {current_user.get_name()})
+    return render_template('profile.html', user_full_name = current_user.get_name())
 
 
-@app.route('/trajectory', methods=['GET'])
-def trajectory():
-    pass
+
 
 
 @app.before_first_request
 def before_first_request():
     pass
+    #session.clear()
     #print('before_first_request() called')
 
 
 @app.before_request
 def before_request():
     """Установление соединения с БД перед выполнением"""
-    session.clear()
     global dbase
     db = cn.get_db()
     dbase = fdb.FDataBase(db)
-    print('before_request() called')
+    #print('before_request() called')
 
 
 @app.after_request

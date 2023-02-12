@@ -12,9 +12,14 @@
 
 
         <div class="disciplines_check">
-              {% for item in disciplines %}
+            Базовые дисциплины
+            {% for item in b_disciplines %}
             {{item}}<input type="checkbox" value = '{{item}}' name="my_checkbox"><br>
-                    {% endfor %}
+                {% endfor %}
+            Элективные дисциплины
+            {% for item in e_disciplines %}
+            {{item}}<input type="checkbox" value = '{{item}}' name="my_checkbox"><br>
+                {% endfor %}
             <button name="page" value="main" type="submit">Сохранить дисциплины</button>
       </div>
 
