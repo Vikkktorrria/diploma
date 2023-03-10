@@ -1,10 +1,10 @@
 <template>
-<div>Это ваш профиль</div>
+
 </template>
 
 <script>
 export default {
-  name: "profile"
+  name: "Login"
 }
 </script>
 

@@ -11,6 +11,11 @@ import UserCard from "@/components/Profile/UserCard";
 import UserNum from "@/components/Profile/UserNum";
 import UserEMail from "@/components/Profile/UserEMail";
 export default {
+  props:{
+    current_user:{
+      type: Object,
+    }
+  },
   name: "user-form",
   components: {UserEMail, UserNum, UserCard}
 }

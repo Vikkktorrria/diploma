@@ -90,46 +90,17 @@
 
     </header>
     <div class="main_box row g-0"> <!--g-0 убирает отступы-->
-        <nav class="navigation col-lg-2">
-            <div class="navigation_bar">
-                <a href="#" class="navigation_el active">Профиль</a>
-                <a href="#" class="navigation_el">Дисциплины</a>
-                <a href="#" class="navigation_el">Траектории</a>
-                <a href="#" class="navigation_el">Настройки</a>
-            </div>
-
-        </nav>
-
-        <section class="content col-lg-8">
-            <div class="profile_item row-cols-1">
-                <div class="user-card col-7 mx-auto"> <!-- элемент с фото и фио пользователя (mx-auto) выравнивает элементы посередине -->
-                    <div class="card user">
-                        <div class="card-body">
-                            <img class="card_user_image" src="img/ico.png" alt="Татьяна">
-                            <div class="card-title">Имя Фамилия отчество</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="user-num col-7 mx-auto"> <!-- элемент с номером зачётной книжки -->
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Номер зачётной книжки студента</h5>
-                            343544234245
-                        </div>
-                    </div>
-                </div>
-                <div class="user-email col-7 mx-auto"> <!-- элемент с почтой -->
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Почта студента</h5>
-                            test@test.ru
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <footer class="footer row">
-                #
-            </footer>
+        <section class="content col-lg-8 mx-auto">
+            <form >
+                    <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">Мы никогда никому не передадим вашу электронную почту.</div>
+                    <label for="exampleInputPassword1" class="form-label">Пароль</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Проверить меня</label>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
         </section>
 
     </div>
