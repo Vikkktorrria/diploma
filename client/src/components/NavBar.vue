@@ -1,10 +1,11 @@
 <template>
-  <nav class="nav nav-tabs col-lg-5 mx-auto">
-    <a class="nav-link active" aria-current="page" href="#">Профиль</a>
-    <a class="nav-link" href="#">Дисциплины</a>
-    <a class="nav-link" href="#">Траектории</a>
-    <a class="nav-link" href="#">Настройки</a>
+  <nav class="my_nav_bar nav-tabs col-lg-5 mx-auto">
+    <router-link to="/profile" class="my_nbar_link nav-link" aria-current="page">Профиль</router-link>
+    <router-link to="/disciplines" class="my_nbar_link nav-link ">Дисциплины</router-link>
+    <router-link to="/trajectory" class="my_nbar_link nav-link active">Траектории</router-link>
+    <router-link to="#" class="my_nbar_link nav-link">Настройки</router-link>
   </nav>
+
 </template>
 
 <script>
@@ -14,4 +15,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

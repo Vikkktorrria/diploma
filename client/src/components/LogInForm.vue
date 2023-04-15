@@ -4,9 +4,8 @@
     <div class="form__el">
       <input
           v-model="current_user.login"
-          type="email"
           class="form__input"
-          placeholder="Почта"
+          placeholder="Логин"
       >
     </div>
     <div class="form__el">

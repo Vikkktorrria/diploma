@@ -1,11 +1,41 @@
-import Profile from "@/pages/Profile";
-import { createRouter } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
+import UserProfile from "@/pages/UserProfile";
+import LogIn from "@/pages/LogIn";
+import StudentPage from "@/pages/StudentPage";
+import StudentRegistration from "@/pages/StudentRegistration";
+import DisciplinesPage from "@/pages/DisciplinesPage";
+import Main from "@/pages/MainPage";
+import TrajectoryPage from "@/pages/TrajectoryPage";
 
 const routes = [
     {
         path: '/',
-        component: Profile
-    }
+        component: Main
+    },
+    {
+        path: '/profile',
+        component: UserProfile
+    },
+    {
+        path: '/login',
+        component: LogIn
+    },
+    {
+        path: '/student/all',
+        component: StudentPage
+    },
+    {
+        path: '/student/registration',
+        component: StudentRegistration
+    },
+    {
+        path: '/disciplines',
+        component: DisciplinesPage
+    },
+    {
+        path: '/trajectory',
+        component: TrajectoryPage
+    },
 ]
 
 const router = createRouter( {
