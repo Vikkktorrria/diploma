@@ -1727,17 +1727,6 @@
   <rdfs:label xml:lang="ru">Траектория 9</rdfs:label>
 </Trajectory>
 
-<Student rdf:about="#Student_2">
-  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <chooses rdf:resource="#Corporate_networks"/>
-  <chooses rdf:resource="#OS"/>
-  <chooses rdf:resource="#Computer_organization"/>
-  <chooses rdf:resource="#Database_management"/>
-  <full_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Копыльских Виктория Максимовна</full_name>
-  <record_book_number rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2345552</record_book_number>
-  <rdfs:label xml:lang="ru">Студент 2</rdfs:label>
-</Student>
-
 <swrl:Imp>
   <swrl:body>
     <swrl:AtomList>

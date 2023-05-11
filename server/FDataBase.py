@@ -3,6 +3,7 @@ from owlready2 import *
 from psycopg2 import OperationalError
 import MyOntology
 from flask_login import current_user
+from flask import jsonify
 
 with open('data.json', encoding='utf-8') as json_file:
     dictionary = json.load(json_file)
@@ -12,6 +13,29 @@ class FDataBase:
     def __init__(self, db):
         self.__db = db
         self.__cur = db.cursor()
+
+    def check_and_get_user(self, login, password):
+        user_data = []
+        check_user_query = f"SELECT EXISTS " \
+                           f"(SELECT user_id, login, password, role_id " \
+                           f"FROM public.users " \
+                           f"WHERE login='{login}' " \
+                           f"AND password='{password}')"
+        self.__cur.execute(check_user_query)
+        result = self.__cur.fetchone()
+        print(check_user_query)
+        if (result == 'true'):
+            get_user_query = f"SELECT user_id, role_id, record_book_number, surname, name, patronymic, e_mail " \
+                             f"FROM public.users JOIN student USING(user_id) WHERE login='{login}'"
+            user_data = self.execute_query_select(get_user_query)
+            return user_data
+        else:
+            print("no such user")
+            return user_data
+
+
+
+
 
     def execute_query(self, query):  # для неселектовых запросов
         try:
@@ -58,17 +82,45 @@ class FDataBase:
             return []
 
     def get_elective_disciplines(self):  # получить все дисциплины (без семестров)
-        disciplines_query = """SELECT discipline_code, discipline_name, taught_per_semester, module_code
-            FROM elective_discipline;"""
+        disciplines_query = """SELECT discipline_code, discipline_name, taught_per_semester, module_name
+	        FROM elective_discipline JOIN module_of_disciplines USING(module_code);"""
         try:
             result = self.execute_query_select(disciplines_query)
-            result_dict = {}
+            result_list = []
             for item in result:
-                result_dict[str(item[0])] = str(item[1])
-            return result_dict
+                disc = {
+                    'discipline_code': item[0],
+                    'discipline_name': item[1],
+                    'taught_per_semester': item[2],
+                    'module_name': item[3],
+                }
+                result_list.append(disc)
+            return result_list
         except:
             print('Ошибка чтения из бд')
             return []
+
+
+    def get_all_students(self):  # получить всех студентов
+        query = """SELECT full_name, record_book_number, e_mail, login, user_id 
+	FROM users JOIN student USING (user_id);"""
+        try:
+            result_arr = self.execute_query_select(query)
+            print(result_arr[0][0])
+            result = []
+            for item in result_arr:
+                result.append({
+                    'full_name': item[0],
+                    'record_book_number': item[1],
+                    'e_mail': item[2],
+                    'login': item[3],
+                    'user_id': item[4],
+                })
+            return result
+        except:
+            print('Ошибка чтения из бд')
+            return []
+
 
     def get_all_disciplines_with_semester(self):
         disciplines_query = """SELECT discipline_name, taught_per_semester
@@ -81,10 +133,15 @@ class FDataBase:
 
 
     def get_trajectory(self, chosen_discipline):
-        st_num = current_user.get_id()
-        rec_book_num = int(current_user.get_record_book_number())
+        #st_num = current_user.get_id()
+        #rec_book_num = int(current_user.get_record_book_number())
+        #f_name = current_user.get_name()
+        st_num = 2
+        rec_book_num = 434343
+        f_name = 'Victoria'
+
         stud = MyOntology.Student('Student_' + str(st_num), None,
-                                  full_name=[current_user.get_name()],
+                                  full_name=[f_name],
                                   record_book_number=[rec_book_num])
         stud.label = locstr('Студент ' + str(st_num), lang="ru")
         owlready2.sync_reasoner_pellet()  # запуск решателя
@@ -115,17 +172,15 @@ class FDataBase:
             trajectory_list_for_db.append(stud_trajec.name)
 
 
-        delete_query = f"DELETE FROM student_trajectories WHERE student_id = {current_user.get_record_book_number()}"
-        self.execute_query(delete_query)
+        #delete_query = f"DELETE FROM student_trajectories WHERE student_id = {current_user.get_record_book_number()}"
+        #self.execute_query(delete_query)
 
-        print(trajectory_list_for_db)
-        for tr in trajectory_list_for_db:
+        #print(trajectory_list_for_db)
+        #for tr in trajectory_list_for_db:
+            #query_for_insert_trajectory = f"INSERT INTO student_trajectories(student_id, trajectory_id) " \
+                                          #f"VALUES ({current_user.get_record_book_number()}, {tr})"
+            #self.execute_query(query_for_insert_trajectory)
 
-
-
-            query_for_insert_trajectory = f"INSERT INTO student_trajectories(student_id, trajectory_id) " \
-                                          f"VALUES ({current_user.get_record_book_number()}, {tr})"
-            self.execute_query(query_for_insert_trajectory)
         MyOntology.onto.save('test_onto_for_db_for_change.owl')  # куда сохранить онтологию
         destroy_entity(stud)  # удаляем сущность студента
         return trajectory_disc

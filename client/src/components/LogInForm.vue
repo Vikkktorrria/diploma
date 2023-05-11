@@ -1,6 +1,6 @@
 <template>
   <div class="login_form_elem col-7 mx-auto">
-  <form>
+  <form @submit.prevent="userAuth">
     <div class="form__el">
       <input
           v-model="current_user.login"
@@ -17,7 +17,7 @@
       >
     </div>
     <div class="form__button">
-      <button class="btn">
+      <button type="submit" class="btn">
         Войти
       </button>
     </div>
@@ -35,7 +35,12 @@ export default {
       }
     }
   },
-  name: "log-in-form"
+  name: "log-in-form",
+  methods: {
+    userAuth() {
+      this.$emit('auth', this.current_user)
+    }
+  }
 }
 </script>
 

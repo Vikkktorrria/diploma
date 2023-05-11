@@ -1,30 +1,19 @@
-from flask import Flask, render_template, redirect, session, url_for, request, flash
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from UserLogin import UserLogin
+from flask import Flask, render_template, redirect, session, url_for, request, jsonify, make_response
 import Connection as cn
 import FDataBase as fdb
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_cors import CORS
 import UploadProtegeFile
-
+import jwt
 
 
 app = Flask(__name__)
-login_manager = LoginManager(app)
-login_manager.init_app(app)
 
-login_manager.login_view = 'login'
-login_manager.login_message = 'Прежде чем посетить данную страницу, вам необходимо авторизоваться'
-login_manager.login_message_category = "success"
+
 # Set the secret key to some random bytes. Keep this really secret!
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-
-
-@login_manager.user_loader
-def load_user(user_id):
-     print("load user")
-     print(user_id)
-     return UserLogin().fromDB(user_id, dbase)
+CORS(app)
 
 
 
@@ -33,60 +22,87 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/discipline', methods=['GET', 'POST'])
-@login_required
+@app.route('/cur_us')
+def get_posts():
+
+    current_user = {
+        'id': 1,
+        'login': 'login',
+        'password': '12334',
+        'full_name': 'Копыльских Виктория Максимовна',
+        'rec_book_num': 23432335,
+        'e_mail': 'lalala@test.ru'
+    }
+    print(current_user)
+    return jsonify(current_user)
+
+
+@app.route('/disciplines', methods=['GET', 'POST'])
+#@login_required
 def discipline():
     if request.method == 'GET':
-        basic_disciplines = dbase.get_basic_disciplines()
-        elective_disciplines = dbase.get_elective_disciplines()
-        return render_template('discipline.html', b_disciplines = basic_disciplines, e_disciplines = elective_disciplines)
+        print(elective_disciplines)
+        return jsonify(elective_disciplines)
     if request.method == 'POST':
-        result = request.form.getlist('my_checkbox')  # выбранные дисциплины
-        print(result)
-        trajectories = dbase.get_trajectory(result)  # полученные траектории
-        result.clear()
+        data_from_client = request.json
+        print(data_from_client)
+        trajectories = dbase.get_trajectory(data_from_client)  # полученные траектории
         print(trajectories)
-        return render_template('trajectory.html', trajectories=trajectories)
+        return jsonify(trajectories)
+        #print(data_from_client)
+
+        #data_from_client.clear()
+        #print(trajectories)
+        # Делаем что-то с полученными данными
+        #return jsonify(trajectories)
+
 
 @app.route('/trajectory', methods=['GET'])
 def trajectory():
-    basic_disciplines = dbase.get_basic_disciplines()
-    elective_disciplines = dbase.get_elective_disciplines()
     return render_template('discipline.html', b_disciplines = basic_disciplines, e_disciplines = elective_disciplines)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('profile'))
-    if request.method == 'POST':
-        user = dbase.getUserByLogin(request.form['login'])
-        if user and check_password_hash(user[2], request.form['psw']):
-            userLogin = UserLogin().create(user)
-            login_user(userLogin)
-            return redirect(request.args.get("next") or url_for('profile'))
-        flash("Неверная пара логин/пароль", "error")
-    return render_template("login.html")
+    username = request.json.get('username')
+    password = request.json.get('password')
+    print(username)
+    print(password)
+
+    user_data = dbase.check_and_get_user(username, password)
+    print(type(user_data))
+    if len(user_data) > 0:
+        payload = {'username': username, 'password': password}
+        token = jwt.encode(payload, 'my_secret_key', algorithm='HS256')
+        return jsonify({'token': token})
+    else:
+        make_response('нет такого чела', 401)
+    print(user_data)
+    # Здесь происходит проверка логина и пароля на соответствие в базе данных
+    # Если они верны, создаем токен и возвращаем его клиенту
+
+
 
 
 @app.route('/logout')
-@login_required
 def logout():
-    logout_user()
     print('пользователь пока')
     #session.clear()
     return redirect(url_for('login'))
 
 
+
+
 @app.route('/profile', methods=['GET', 'POST'])
-@login_required
 def profile():
+    pass
+
+
+@app.route('/student/all')
+def get_all_stud():
     if request.method == 'GET':
-        return render_template('profile.html', user_full_name = current_user.get_name())
-    if request.method == 'POST':
-        return redirect(url_for('logout'))
-
-
+        all_students = dbase.get_all_students()
+        return jsonify(all_students)
 
 
 
@@ -99,9 +115,13 @@ def before_first_request():
 @app.before_request
 def before_request():
     """Установление соединения с БД перед выполнением"""
-    global dbase
+    global dbase, basic_disciplines, elective_disciplines
     db = cn.get_db()
     dbase = fdb.FDataBase(db)
+
+    basic_disciplines = dbase.get_basic_disciplines()
+    elective_disciplines = dbase.get_elective_disciplines()
+
     #print('before_request() called')
 
 
