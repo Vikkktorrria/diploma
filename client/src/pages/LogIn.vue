@@ -22,6 +22,7 @@
 <script>
 import LogInForm from "@/components/LogInForm";
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -35,28 +36,25 @@ export default {
   components: {
     LogInForm,
   },
-  methods:{
-    userAuth(current_user) {
-      console.log('пользователь воняет:', current_user);
+  methods: {
+    async userAuth(current_user) {
       this.current_user = current_user;
-
-      axios.post('/login', {
-        username: this.current_user.login,
-        password: this.current_user.password
-      })
-          .then(response => {
-            localStorage.setItem('token', response.data.token)
-            console.log('токен',response.data.token)
-            // Теперь можно отправлять запросы на защищенные маршруты
-          })
-          .catch(error => {
-            console.log(error + 'я немного воняю')
-          })
-    },
-    login() {
-
+      try {
+        const response = await axios.post('/login', {
+          username: this.current_user.login,
+          password: this.current_user.password
+        })
+        localStorage.setItem('token', response.data.token);
+        console.log('токен', response.data.token);
+        this.$router.push({name: 'disciplines'})
+      } catch (error) {
+        console.log(error, error.response.status)
+        if (error.response.status === 401) {
+          console.log('Неверный логин или парольиус')
+        }
+      }
     }
-  },
+  }
 }
 </script>
 

@@ -71,13 +71,15 @@ def login():
 
     user_data = dbase.check_and_get_user(username, password)
     print(type(user_data))
-    if len(user_data) > 0:
+    if user_data is not None:
         payload = {'username': username, 'password': password}
         token = jwt.encode(payload, 'my_secret_key', algorithm='HS256')
+
         return jsonify({'token': token})
     else:
-        make_response('нет такого чела', 401)
-    print(user_data)
+        print('нет такого чела')
+        #error = {'error': 'Неверный логин или пароль (ответ сервера)'}
+        return make_response('ашибка', 401)
     # Здесь происходит проверка логина и пароля на соответствие в базе данных
     # Если они верны, создаем токен и возвращаем его клиенту
 
@@ -118,6 +120,7 @@ def before_request():
     global dbase, basic_disciplines, elective_disciplines
     db = cn.get_db()
     dbase = fdb.FDataBase(db)
+
 
     basic_disciplines = dbase.get_basic_disciplines()
     elective_disciplines = dbase.get_elective_disciplines()

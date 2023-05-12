@@ -14,24 +14,25 @@ class FDataBase:
         self.__db = db
         self.__cur = db.cursor()
 
+    def get_student(self, user_id):
+       pass
+
     def check_and_get_user(self, login, password):
-        user_data = []
-        check_user_query = f"SELECT EXISTS " \
-                           f"(SELECT user_id, login, password, role_id " \
+        check_user_query = f"SELECT user_id, login, password, role_id " \
                            f"FROM public.users " \
                            f"WHERE login='{login}' " \
-                           f"AND password='{password}')"
+                           f"AND password='{password}';"
         self.__cur.execute(check_user_query)
         result = self.__cur.fetchone()
-        print(check_user_query)
-        if (result == 'true'):
-            get_user_query = f"SELECT user_id, role_id, record_book_number, surname, name, patronymic, e_mail " \
-                             f"FROM public.users JOIN student USING(user_id) WHERE login='{login}'"
-            user_data = self.execute_query_select(get_user_query)
-            return user_data
+        if result is not None:
+            disc_user_data = {
+                'user_id': result[0],
+                'login': result[1],
+                'role_id': result[3],
+            }
+            return disc_user_data
         else:
-            print("no such user")
-            return user_data
+            return result
 
 
 

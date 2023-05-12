@@ -30,6 +30,7 @@ const routes = [
     },
     {
         path: '/disciplines',
+        name: 'disciplines',
         component: DisciplinesPage
     },
     {
