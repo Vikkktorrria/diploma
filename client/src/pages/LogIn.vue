@@ -22,6 +22,7 @@
 <script>
 import LogInForm from "@/components/LogInForm";
 import axios from "axios";
+import {mapActions} from "vuex";
 
 export default {
   data() {
@@ -29,7 +30,8 @@ export default {
       current_user: {
         login: '',
         password: '',
-      }
+      },
+      user_data: {},
     }
   },
   name: "log-in",
@@ -37,6 +39,8 @@ export default {
     LogInForm,
   },
   methods: {
+    ...mapActions(['updateUser']),
+
     async userAuth(current_user) {
       this.current_user = current_user;
       try {
@@ -45,10 +49,16 @@ export default {
           password: this.current_user.password
         })
         localStorage.setItem('token', response.data.token);
+        this.user_data = response.data.user;
+
+
         console.log('токен', response.data.token);
+        console.log('данные пользователя', response.data.user)
+
+        this.$store.dispatch('updateUser', this.user_data); //сохраняю в локальный стор данные
+
         this.$router.push({name: 'disciplines'})
       } catch (error) {
-        console.log(error, error.response.status)
         if (error.response.status === 401) {
           console.log('Неверный логин или парольиус')
         }

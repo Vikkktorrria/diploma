@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <nav-bar></nav-bar>
+    <nav-bar v-if="isAuth"></nav-bar>
     <router-view></router-view>
   </div>
 </template>
@@ -20,7 +20,11 @@
 </style>
 <script>
 import NavBar from "@/components/NavBar";
+import {mapGetters} from "vuex";
 export default {
-  components: {NavBar}
-}
+  components: {NavBar},
+  computed: {
+    ...mapGetters(['isAuth'])
+  },
+};
 </script>

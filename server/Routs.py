@@ -70,12 +70,44 @@ def login():
     print(password)
 
     user_data = dbase.check_and_get_user(username, password)
+
     print(type(user_data))
     if user_data is not None:
+        if user_data['role_id'] == 1:
+            user_role = 'Регистратор'
+        elif user_data['role_id'] == 2:
+            user_role = 'Студент'
+        else:
+            pass
+
+        print('роль', user_data['role_id'], user_role)
         payload = {'username': username, 'password': password}
         token = jwt.encode(payload, 'my_secret_key', algorithm='HS256')
 
-        return jsonify({'token': token})
+       # return jsonify({'token': token})
+        if user_role == 'Студент':
+            return jsonify({
+                'token': token,
+                'user': {
+                    'rec_book_num': user_data['record_book_number'],
+                    'username': user_data['login'],
+                    'surname': user_data['surname'],
+                    'name': user_data['name'],
+                    'patronymic': user_data['patronymic'],
+                    'e_mail': user_data['e_mail'],
+                    'user_id': user_data['user_id'],
+                    'role_id': user_data['role_id'],
+                }
+            })
+        if user_role == 'Регистратор':
+            return jsonify({
+                'token': token,
+                'user': {
+                    'username': user_data['login'],
+                    'user_id': user_data['user_id'],
+                    'role_id': user_data['role_id'],
+                }
+            })
     else:
         print('нет такого чела')
         #error = {'error': 'Неверный логин или пароль (ответ сервера)'}

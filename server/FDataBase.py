@@ -17,6 +17,7 @@ class FDataBase:
     def get_student(self, user_id):
        pass
 
+
     def check_and_get_user(self, login, password):
         check_user_query = f"SELECT user_id, login, password, role_id " \
                            f"FROM public.users " \
@@ -25,12 +26,25 @@ class FDataBase:
         self.__cur.execute(check_user_query)
         result = self.__cur.fetchone()
         if result is not None:
-            disc_user_data = {
+            user_data = {
                 'user_id': result[0],
                 'login': result[1],
                 'role_id': result[3],
             }
-            return disc_user_data
+            if result[3] == 2:
+                get_student_query = f"SELECT record_book_number, surname, name, patronymic, e_mail " \
+                                    f"FROM student " \
+                                    f"JOIN users USING(user_id)" \
+                                    f"WHERE user_id = {user_data['user_id']};"
+                self.__cur.execute(get_student_query)
+                student_query_result = self.__cur.fetchone()
+                user_data['record_book_number'] = student_query_result[0]
+                user_data['surname'] = student_query_result[1]
+                user_data['name'] = student_query_result[2]
+                user_data['patronymic'] = student_query_result[3]
+                user_data['e_mail'] = student_query_result[4]
+            print('Данные пользователя', user_data)
+            return user_data
         else:
             return result
 
