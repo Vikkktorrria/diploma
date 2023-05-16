@@ -36,6 +36,7 @@ const routes = [
     },
     {
         path: '/trajectory',
+        name: 'trajectory',
         component: TrajectoryPage
     },
 ]

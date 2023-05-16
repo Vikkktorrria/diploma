@@ -1,5 +1,3 @@
-
-
 export const authModule = {
     state: {
         current_user: {

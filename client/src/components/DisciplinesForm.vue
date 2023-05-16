@@ -122,12 +122,23 @@
 
 
         <div class="accordion-item">
-          <h2 class="accordion-header" id="panelsStayOpen-heading6">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse6" aria-expanded="false" aria-controls="panelsStayOpen-collapse6">
+          <h2
+              class="accordion-header"
+              id="panelsStayOpen-heading6">
+            <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapse6"
+                aria-expanded="false"
+                aria-controls="panelsStayOpen-collapse6">
               Элективные дисциплины 1
             </button>
           </h2>
-          <div id="panelsStayOpen-collapse6" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading6">
+          <div
+              id="panelsStayOpen-collapse6"
+              class="accordion-collapse collapse"
+              aria-labelledby="panelsStayOpen-heading6">
             <div class="accordion-body">
               <ul id="array-rendering"
                   v-for="item in all_disciplines"
@@ -205,8 +216,16 @@
 
 <script>
 import axios from "axios";
+import { getUser } from '@/store/authModule'
+import {mapGetters} from "vuex";
 
 export default {
+  computed:{
+    ...mapGetters(['getUser']),
+    user(){
+      return getUser()
+    }
+  },
   props:{
     all_disciplines:{
       type: Array,
@@ -215,15 +234,26 @@ export default {
   data() {
     return {
       checkedDisciplines: [],
+      data_for_submit: {},
     }
   },
   methods: {
-    async submitDisciplines() { // функция для получения данных с сервера
+    async submitDisciplines() { // функция для отправления данных на сервер
       try{
-        console.log('моча')
-        const response = await axios.post('disciplines', this.checkedDisciplines);
-        console.log(response)
-        console.log('дисциплины отправляются');
+        const user = this.getUser // текущий авторизованный пользователь
+        this.data_for_submit = {
+          'disciplines': this.checkedDisciplines,
+          'student': user,
+        }
+        const response = await axios.post('disciplines', this.data_for_submit);
+
+
+        console.log(response.data)
+        console.log('Данные отправляются');
+
+        this.$router.push({
+          name: 'trajectory',
+        })
       } catch(e){
         alert('Ошибка отправки дисциплин');
       }

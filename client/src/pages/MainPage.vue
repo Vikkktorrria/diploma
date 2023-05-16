@@ -1,5 +1,9 @@
 <template>
-<div>Яйцо и моча</div>
+  <body>
+  <div class="container-wrapper container">
+
+  </div>
+  </body>
 </template>
 
 <script>

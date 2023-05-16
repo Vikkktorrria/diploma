@@ -33,7 +33,6 @@ export default {
       try{
         const response = await axios.get('disciplines');
         this.all_disciplines = response.data;
-        console.log(response)
       } catch(e){
         alert('Ошибка получения дисциплин');
       }
