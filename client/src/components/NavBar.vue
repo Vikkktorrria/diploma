@@ -4,19 +4,36 @@
   >
     Выход
   </button>
-  <nav class="my_nav_bar nav-tabs col-lg-5 mx-auto">
-    <router-link to="/profile" class="my_nbar_link nav-link active" aria-current="page">Профиль</router-link>
-    <router-link to="/disciplines" class="my_nbar_link nav-link ">Дисциплины</router-link>
-    <router-link to="/trajectory" class="my_nbar_link nav-link ">Траектории</router-link>
-    <router-link to="#" class="my_nbar_link nav-link">Настройки</router-link>
-  </nav>
+  <div  v-if="this.user.role_id === 1">
+    <nav class="my_nav_bar nav-tabs col-lg-5 mx-auto">
+      <router-link to="/student/all" class="my_nbar_link nav-link active" aria-current="page">Студенты</router-link>
+      <router-link to="/disciplines" class="my_nbar_link nav-link ">Дисциплины</router-link>
+      <router-link to="/trajectory" class="my_nbar_link nav-link ">Траектории</router-link>
+      <router-link to="#" class="my_nbar_link nav-link">Настройки</router-link>
+    </nav>
+  </div>
+
+  <div v-else-if="this.user.role_id === 2">
+    <nav class="my_nav_bar nav-tabs col-lg-5 mx-auto">
+      <router-link to="/profile" class="my_nbar_link nav-link active" aria-current="page">Профиль</router-link>
+      <router-link to="/disciplines" class="my_nbar_link nav-link ">Дисциплины</router-link>
+      <router-link to="/trajectory" class="my_nbar_link nav-link ">Траектории</router-link>
+      <router-link to="#" class="my_nbar_link nav-link">Настройки</router-link>
+    </nav>
+  </div>
 
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
+  computed:{
+    ...mapGetters(['getUser']),
+    user() {
+      return this.$store.getters.getUser; // Получение данных пользователя из геттера
+    },
+  },
   name: "nav-bar",
   methods: {
     ...mapActions(['logOutUser']),
@@ -26,6 +43,9 @@ export default {
       this.$router.push({name: 'login'})
 
     },
+  },
+  mounted(){
+    console.log(this.user.role_id);
   },
 }
 </script>

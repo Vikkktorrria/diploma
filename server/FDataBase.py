@@ -2,8 +2,6 @@ import json
 from owlready2 import *
 from psycopg2 import OperationalError
 import MyOntology
-from flask_login import current_user
-from flask import jsonify
 
 with open('data.json', encoding='utf-8') as json_file:
     dictionary = json.load(json_file)
@@ -48,7 +46,12 @@ class FDataBase:
         else:
             return result
 
-
+    def set_trajectories_to_student(self, trajectories, stud_id):
+        del_query = f"DELETE FROM public.student_trajectories WHERE student_id = {stud_id};"
+        self.execute_query(del_query)
+        for i in range(0, len(trajectories)):
+            set_query = f"INSERT INTO student_trajectories(student_id, trajectory_id) VALUES ({stud_id}, {trajectories[i]});"
+            self.execute_query(set_query)
 
 
 
@@ -115,9 +118,81 @@ class FDataBase:
             print('Ошибка чтения из бд')
             return []
 
+    def get_all_trajectories(self):  # получить все дисциплины (без семестров)
+        trajectories_query = "SELECT trajectory_id, speciality_code, speciality_name " \
+                            "FROM trajectory;"
+        try:
+            result_tr = self.execute_query_select(trajectories_query)
+            result_list = []
+            all_disc_list = []
+            for tr in result_tr:
+                result_ds = self.get_dics_in_trajec(tr[0]) # получаем дисциплины из траектории с номером tr[0]
+                for ds in result_ds:
+                    result_dist = {
+                        'discipline_code': ds[0],
+                        'discipline_name': ds[1],
+                    }
+                    all_disc_list.append(result_dist)
+                trajec = {
+                    'trajectory_id': tr[0],
+                    'speciality_code': tr[1],
+                    'speciality_name': tr[2],
+                    'disciplines': all_disc_list
+                }
+                result_list.append(trajec)
+            return result_list
+        except:
+            print('Ошибка чтения всех траекторий из бд')
+            return []
+
+    def get_student_trajectories(self, stud_id):
+        trajectories_query = f"SELECT trajectory.trajectory_id, trajectory.speciality_code, trajectory.speciality_name " \
+                             f"FROM trajectory JOIN student_trajectories " \
+                             f"ON trajectory.trajectory_id = student_trajectories.trajectory_id " \
+                             f"JOIN student " \
+                             f"ON student_trajectories.student_id = student.record_book_number " \
+                             f"WHERE student_id={2345552}"
+        try:
+            result_tr = self.execute_query_select(trajectories_query)
+            result_list = []
+            all_disc_list = []
+            for tr in result_tr:
+                result_ds = self.get_dics_in_trajec(tr[0]) # получаем дисциплины из траектории с номером tr[0]
+                for ds in result_ds:
+                    result_dist = {
+                        'discipline_code': ds[0],
+                        'discipline_name': ds[1],
+                    }
+                    all_disc_list.append(result_dist)
+                trajec = {
+                    'trajectory_id': tr[0],
+                    'speciality_code': tr[1],
+                    'speciality_name': tr[2],
+                    'disciplines': all_disc_list
+                }
+                result_list.append(trajec)
+            return result_list
+        except:
+            print('Ошибка чтения траекторий студента из бд')
+            return []
+
+    def get_dics_in_trajec(self, trajec_num):
+        dics_in_trajec_query = f"SELECT discipline_code, discipline_name " \
+                               f"FROM discipline_in_trajectory JOIN basic_discipline USING(discipline_code) " \
+                               f"UNION " \
+                               f"SELECT discipline_code, discipline_name " \
+                               f"FROM discipline_in_trajectory JOIN elective_discipline USING(discipline_code) " \
+                               f"WHERE trajectory_id = {trajec_num};"
+        try:
+            result = self.execute_query_select(dics_in_trajec_query)
+            return result
+        except:
+            print('Ошибка чтения дисциплин в траектории бд')
+            return []
+
 
     def get_all_students(self):  # получить всех студентов
-        query = """SELECT full_name, record_book_number, e_mail, login, user_id 
+        query = """SELECT surname, name, patronymic, record_book_number, e_mail, login, user_id 
 	FROM users JOIN student USING (user_id);"""
         try:
             result_arr = self.execute_query_select(query)
@@ -125,11 +200,13 @@ class FDataBase:
             result = []
             for item in result_arr:
                 result.append({
-                    'full_name': item[0],
-                    'record_book_number': item[1],
-                    'e_mail': item[2],
-                    'login': item[3],
-                    'user_id': item[4],
+                    'surname' : item[0],
+                    'name' : item[1],
+                    'patronymic' : item[2],
+                    'record_book_number': item[3],
+                    'e_mail': item[4],
+                    'login': item[5],
+                    'user_id': item[6],
                 })
             return result
         except:
@@ -147,18 +224,11 @@ class FDataBase:
         return disciplines_result
 
 
-    def get_trajectory(self, chosen_discipline):
-        #st_num = current_user.get_id()
-        #rec_book_num = int(current_user.get_record_book_number())
-        #f_name = current_user.get_name()
-        st_num = 2
-        rec_book_num = 434343
-        f_name = 'Victoria'
-
-        stud = MyOntology.Student('Student_' + str(st_num), None,
+    def get_trajectory(self, chosen_discipline, user_id, record_book_number, f_name):
+        stud = MyOntology.Student('Student_' + str(user_id), None,
                                   full_name=[f_name],
-                                  record_book_number=[rec_book_num])
-        stud.label = locstr('Студент ' + str(st_num), lang="ru")
+                                  record_book_number=[record_book_number])
+        stud.label = locstr('Студент ' + str(user_id), lang="ru")
         owlready2.sync_reasoner_pellet()  # запуск решателя
 
         for choos_disc in chosen_discipline:
@@ -176,62 +246,11 @@ class FDataBase:
 
         owlready2.sync_reasoner_pellet(infer_property_values=True,
                                        infer_data_property_values=True)  # запуск решателя чтоб достать траекторию
-        trajectory_disc = {}
-        trajectory_list_for_db = []
-        cont_disc_list = []
+        result_trajectory = []
+
         for stud_trajec in stud.builds:  # траектории
-            cont_disc_list.clear()
-            for disc in stud_trajec.contains:  # дисциплины
-                cont_disc_list.append(str(disc.label[0]))
-            trajectory_disc[str(stud_trajec.label[0])] = cont_disc_list # траектория и предметы в траектории (было str(stud_trajec.label[0])
-            trajectory_list_for_db.append(stud_trajec.name)
-
-
-        #delete_query = f"DELETE FROM student_trajectories WHERE student_id = {current_user.get_record_book_number()}"
-        #self.execute_query(delete_query)
-
-        #print(trajectory_list_for_db)
-        #for tr in trajectory_list_for_db:
-            #query_for_insert_trajectory = f"INSERT INTO student_trajectories(student_id, trajectory_id) " \
-                                          #f"VALUES ({current_user.get_record_book_number()}, {tr})"
-            #self.execute_query(query_for_insert_trajectory)
+            result_trajectory.append(stud_trajec.name)
 
         MyOntology.onto.save('test_onto_for_db_for_change.owl')  # куда сохранить онтологию
         destroy_entity(stud)  # удаляем сущность студента
-        return trajectory_disc
-
-    def getUser(self, user_id):
-        try:
-            self.__cur.execute(f"SELECT user_id, login, role_id FROM users WHERE user_id = {user_id} LIMIT 1")
-            res = self.__cur.fetchone()
-            if not res:
-                print('Пользователь не найден')
-                return False
-            return res
-        except OperationalError as e:
-            print(f"Ошибка получения данных '{e}'")
-        return False
-
-    def getFullName(self, user_id):
-        try:
-            self.__cur.execute(f"SELECT record_book_number, full_name, user_id FROM student WHERE user_id = {user_id}")
-            res = self.__cur.fetchone()
-            if not res:
-                print('Пользователь не найден')
-                return False
-            return res
-        except OperationalError as e:
-            print(f"Ошибка получения данных '{e}'")
-        return False
-
-    def getUserByLogin(self, login):
-        try:
-            self.__cur.execute(f"SELECT * FROM users WHERE login = '{login}' LIMIT 1")
-            res = self.__cur.fetchone()
-            if not res:
-                print('Пользователь не найден')
-                return False
-            return res
-        except OperationalError as e:
-            print(f"Ошибка получения данных '{e}'")
-        return False
+        return result_trajectory

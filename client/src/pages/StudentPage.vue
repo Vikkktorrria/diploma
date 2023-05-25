@@ -1,14 +1,44 @@
 <template>
   <div class="container-wrapper container">
     <section class="content col-lg-8 mx-auto">
-      <div
-          v-for="stud in all_students"
-          :key="stud.user_id"
-          :stud="stud"
-      ></div>
-      <footer class="footer row">
+      <table>
+        <thead>
+        <tr>
+          <th>Фамилия</th>
+          <th>Имя</th>
+          <th>Отчество</th>
+          <th>Номер зачётной книжки</th>
+          <th>Эл.почта</th>
+          <th>Логин</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+            v-for="student in all_students"
+            :key="student.user_id"
+            @click="showDialog(student)">
+          <td>{{ student.surname }}</td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.patronymic }}</td>
+          <td>{{ student.record_book_number }}</td>
+          <td>{{ student.e_mail }}</td>
+          <td>{{ student.login }}</td>
+        </tr>
+        </tbody>
+      </table>
+      <button
+          @click="showDialog"
+      >
+        Открыть
+      </button>
+      <modal-window
+          v-model:show="dialogVisible"
+      >
+        <student-table
+            :student="selectedStudent"
+        />
 
-      </footer>
+      </modal-window>
 
     </section>
 
@@ -18,16 +48,22 @@
 
 <script>
 import axios from "axios";
+import StudentTable from "@/components/StudentTable";
+import ModalWindow from "@/components/ModalWindow";
 
 export default {
+  components: {
+    StudentTable,
+    ModalWindow
+  },
   data(){
     return{
       all_students: [],
-    }
+      dialogVisible: false,
+      selectedStudent: null,
+    };
   },
   name: "student-page",
-  components: {
-  },
   methods:{
     async fetchStudents() { // функция для получения данных с сервера
       try{
@@ -38,6 +74,12 @@ export default {
         alert('Ошибка');
       }
     },
+    showDialog(student) {
+      this.dialogVisible = true;
+      this.selectedStudent = student;
+    }
+
+
   },
   mounted(){
     this.fetchStudents();

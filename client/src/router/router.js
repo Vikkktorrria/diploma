@@ -4,13 +4,13 @@ import LogIn from "@/pages/LogIn";
 import StudentPage from "@/pages/StudentPage";
 import StudentRegistration from "@/pages/StudentRegistration";
 import DisciplinesPage from "@/pages/DisciplinesPage";
-import Main from "@/pages/MainPage";
 import TrajectoryPage from "@/pages/TrajectoryPage";
+import TempPage from "@/pages/TempPage";
 
 const routes = [
     {
         path: '/',
-        component: Main
+        component: LogIn
     },
     {
         path: '/profile',
@@ -23,6 +23,7 @@ const routes = [
     },
     {
         path: '/student/all',
+        name: 'studentPage',
         component: StudentPage
     },
     {
@@ -38,6 +39,10 @@ const routes = [
         path: '/trajectory',
         name: 'trajectory',
         component: TrajectoryPage
+    },
+    {
+        path: '/test',
+        component: TempPage
     },
 ]
 

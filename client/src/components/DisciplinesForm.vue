@@ -242,10 +242,11 @@ export default {
       try{
         const user = this.getUser // текущий авторизованный пользователь
         this.data_for_submit = {
-          'disciplines': this.checkedDisciplines,
+          'disciplines': this.checkedDisciplines, // выбранные дисциплины
           'student': user,
         }
         const response = await axios.post('disciplines', this.data_for_submit);
+        // передаём дисциплины и пользователя
 
 
         console.log(response.data)

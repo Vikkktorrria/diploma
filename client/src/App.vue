@@ -3,6 +3,9 @@
     <nav-bar v-if="isAuth"></nav-bar>
     <router-view></router-view>
   </div>
+  <div class="container-wrapper container">
+
+  </div>
 </template>
 
 
@@ -19,6 +22,9 @@
 
 </style>
 <script>
+import axios from "axios";
+axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 import NavBar from "@/components/NavBar";
 import {mapGetters} from "vuex";
 export default {

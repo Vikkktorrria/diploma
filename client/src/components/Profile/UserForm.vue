@@ -4,7 +4,7 @@
       <div class="card user">
         <div class="card-body">
           <img class="card_user_image" src="img/ico.png" alt="иконка">
-          <div class="card-title">{{ current_user.full_name }}
+          <div class="card-title">{{ this.user.name }}
           </div>
         </div>
       </div>
@@ -13,7 +13,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Номер зачётной книжки студента</h5>
-          {{ current_user.rec_book_num }}
+          {{ this.user.rec_book_num }}
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Почта студента</h5>
-          {{ current_user.e_mail }}
+          {{ this.user.e_mail }}
         </div>
       </div>
     </div>
@@ -30,11 +30,14 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
-  props:{
-    current_user:{
-      type: Object,
-    }
+  computed: {
+    ...mapGetters(['getUser']),
+    user() {
+      return this.$store.getters.getUser; // Получение данных пользователя из геттера
+    },
   },
   name: "user-form",
   components: {}

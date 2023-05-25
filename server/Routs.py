@@ -1,9 +1,7 @@
 from flask import Flask, render_template, redirect, session, url_for, request, jsonify, make_response
 import Connection as cn
 import FDataBase as fdb
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
-import UploadProtegeFile
 import jwt
 
 
@@ -22,46 +20,43 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/cur_us')
-def get_posts():
-
-    current_user = {
-        'id': 1,
-        'login': 'login',
-        'password': '12334',
-        'full_name': 'Копыльских Виктория Максимовна',
-        'rec_book_num': 23432335,
-        'e_mail': 'lalala@test.ru'
-    }
-    print(current_user)
-    return jsonify(current_user)
-
-
 @app.route('/disciplines', methods=['GET', 'POST'])
-#@login_required
 def discipline():
     if request.method == 'GET':
         print(elective_disciplines)
         return jsonify(elective_disciplines)
     if request.method == 'POST':
         data_from_client = request.json
-        print(data_from_client)
-        trajectories = dbase.get_trajectory(data_from_client)  # полученные траектории
-        print(trajectories)
-        return jsonify(trajectories)
-        #print(data_from_client)
+        print('данные с клиента', data_from_client)
+        choosen_disciplines = data_from_client['disciplines']
 
-        #data_from_client.clear()
-        #print(trajectories)
-        # Делаем что-то с полученными данными
-        #return jsonify(trajectories)
+        student_data = data_from_client['student']
+        user_id = student_data['user_id']
+        rec_book_num = student_data['rec_book_num']
+        surname = student_data['surname']
+        name = student_data['name']
+        patronymic = student_data['patronymic']
+        f_name = surname + name + patronymic
 
-
-@app.route('/trajectory', methods=['GET'])
-def trajectory():
-    return render_template('discipline.html', b_disciplines = basic_disciplines, e_disciplines = elective_disciplines)
+        trajectories = dbase.get_trajectory(choosen_disciplines, user_id, rec_book_num, f_name)  # полученные траектории
+        dbase.set_trajectories_to_student(trajectories, rec_book_num)  # добавляем траектории в бд
 
 
+@app.route('/trajectory/all', methods=['GET'])
+def all_trajectories():
+    if request.method == 'GET':
+        all_trajec = dbase.get_all_trajectories()
+        return jsonify(all_trajec)
+
+
+@app.route('/trajectory/<stud_id>', methods=['GET'])
+def stud_trajectories(stud_id):
+    if request.method == 'GET':
+        trajec = dbase.get_student_trajectories(stud_id)
+        return jsonify(trajec)
+
+
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     username = request.json.get('username')
@@ -116,20 +111,11 @@ def login():
     # Если они верны, создаем токен и возвращаем его клиенту
 
 
-
-
 @app.route('/logout')
 def logout():
     print('пользователь пока')
     #session.clear()
     return redirect(url_for('login'))
-
-
-
-
-@app.route('/profile', methods=['GET', 'POST'])
-def profile():
-    pass
 
 
 @app.route('/student/all')
@@ -149,13 +135,14 @@ def before_first_request():
 @app.before_request
 def before_request():
     """Установление соединения с БД перед выполнением"""
-    global dbase, basic_disciplines, elective_disciplines
+    global dbase, basic_disciplines, elective_disciplines, all_trajectories
     db = cn.get_db()
     dbase = fdb.FDataBase(db)
 
-
     basic_disciplines = dbase.get_basic_disciplines()
     elective_disciplines = dbase.get_elective_disciplines()
+    all_trajectories = dbase.get_all_trajectories()
+
 
     #print('before_request() called')
 

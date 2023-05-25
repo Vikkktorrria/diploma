@@ -31,7 +31,6 @@ export default {
         login: '',
         password: '',
       },
-      user_data: {},
     }
   },
   name: "log-in",
@@ -49,13 +48,11 @@ export default {
           password: this.current_user.password
         })
         localStorage.setItem('token', response.data.token);
-        this.user_data = response.data.user;
-
 
         console.log('токен', response.data.token);
-        console.log('данные пользователя', response.data.user)
+       // console.log('данные пользователя', response.data)
 
-        this.$store.dispatch('updateUser', this.user_data); //сохраняю в локальный стор данные
+        this.$store.dispatch('updateUser', response.data.user); //сохраняю в локальный стор данные
 
         this.$router.push({name: 'disciplines'})
       } catch (error) {

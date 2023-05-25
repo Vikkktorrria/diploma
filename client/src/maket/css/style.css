@@ -6,6 +6,9 @@ body{
     overflow: hidden;
     background: #b5c1c6;
 }
+tbody {
+    cursor: pointer;
+}
 .head {
     width: 100%;
     display: flex;
@@ -85,4 +88,28 @@ body{
     padding-right: 5px;
     font-size: 20px;
 
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 15px solid #F2F8F8;
+    border-top: 5px solid #F2F8F8;
+    border-collapse: collapse;
+}
+table th {
+    font-weight: bold;
+    padding: 5px;
+    background: #F2F8F8;
+    border: none;
+    border-bottom: 5px solid #F2F8F8;
+}
+table td {
+    padding: 5px;
+    border: none;
+    border-bottom: 5px solid #F2F8F8;
+}
+table tr:hover{
+    background: blue;
+    color: white;
 }
