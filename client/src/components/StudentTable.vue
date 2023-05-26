@@ -8,6 +8,7 @@
       <p><strong>Эл.почта:</strong><input :value="this.student.e_mail"></p>
       <p><strong>Логин:</strong><input :value="this.student.login"></p>
     </div>
+  <button>Сохранить</button>
 </template>
 
 <script>

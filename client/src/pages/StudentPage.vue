@@ -26,11 +26,6 @@
         </tr>
         </tbody>
       </table>
-      <button
-          @click="showDialog"
-      >
-        Открыть
-      </button>
       <modal-window
           v-model:show="dialogVisible"
       >

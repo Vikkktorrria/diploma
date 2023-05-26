@@ -1,11 +1,25 @@
 <template>
   <div class="login_form_elem col-7 mx-auto">
-    <form>
+    <form @submit.prevent="studentRegistrationData">
       <div class="form__el">
         <input
-            v-model="student.full_name"
+            v-model="student.surname"
             class="form__input"
-            placeholder="ФИО"
+            placeholder="Фамилия"
+        >
+      </div>
+      <div class="form__el">
+        <input
+            v-model="student.name"
+            class="form__input"
+            placeholder="Имя"
+        >
+      </div>
+      <div class="form__el">
+        <input
+            v-model="student.patronymic"
+            class="form__input"
+            placeholder="Отчество"
         >
       </div>
       <div class="form__el">
@@ -38,9 +52,7 @@
         >
       </div>
       <div class="form__button">
-        <button
-            class="btn"
-            @click="addStudent"
+        <button type="submit" class="btn"
         >
           Зарегистрировать
         </button>
@@ -56,29 +68,19 @@ export default {
   data() {
     return{
       student: {
-        full_name: '',
+        surname: '',
+        name: '',
+        patronymic: '',
         record_book_number: '',
         e_mail: '',
         login: '',
         password: '',
       },
-      full_name: '',
-      record_book_number: '',
-      e_mail: '',
-      login: '',
-      password: '',
     }
   },
   methods: {
-    addStudent(){
-      const newStudent = {
-        full_name: this.full_name,
-        record_book_number: this.record_book_number,
-        e_mail: this.e_mail,
-        login: this.login,
-        password: this.password,
-      }
-      console.log('Студент зарегистрирован', newStudent)
+    studentRegistrationData(){
+      this.$emit('registr', this.student)
     }
   }
 }
