@@ -43,7 +43,7 @@
 
 <script>
 import axios from "axios";
-import StudentTable from "@/components/StudentTable";
+import StudentTable from "@/components/Tables/StudentTable";
 import ModalWindow from "@/components/ModalWindow";
 
 export default {

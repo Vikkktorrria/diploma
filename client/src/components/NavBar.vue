@@ -33,18 +33,22 @@ export default {
     user() {
       return this.$store.getters.getUser; // Получение данных пользователя из геттера
     },
+    isAuth(){
+      return this.$store.getters.isAuth;
+    }
   },
   name: "nav-bar",
   methods: {
     ...mapActions(['logOutUser']),
 
     async logOut() { // функция для получения данных с сервера
-      this.$store.dispatch('logOutUser'); //сохраняю в локальный стор данные
+      this.$store.dispatch('logOutUser');
       this.$router.push({name: 'login'})
 
     },
   },
   mounted(){
+    print('Авторизация', this.isAuth)
     console.log(this.user.role_id);
   },
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="student_table">
+    <div class="change_data_table">
       <h2>Редактирование студента</h2>
       <p><strong>Фамилия:</strong><input :value="this.student.surname"></p>
       <p><strong>Имя:</strong><input :value="this.student.name"></p>

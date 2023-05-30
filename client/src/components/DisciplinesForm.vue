@@ -240,6 +240,7 @@ export default {
   methods: {
     async submitDisciplines() { // функция для отправления данных на сервер
       try{
+
         const user = this.getUser // текущий авторизованный пользователь
         this.data_for_submit = {
           'disciplines': this.checkedDisciplines, // выбранные дисциплины
@@ -247,10 +248,8 @@ export default {
         }
         const response = await axios.post('disciplines', this.data_for_submit);
         // передаём дисциплины и пользователя
-
-
         console.log(response.data)
-        console.log('Данные отправляются');
+        console.log('Дисциплины сохранились и отправляются')
 
         this.$router.push({
           name: 'trajectory',

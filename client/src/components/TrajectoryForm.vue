@@ -11,6 +11,7 @@
           <h2
               class="accordion-header"
               :id="'panelsStayOpen-heading' + trajec.trajectory_id">
+
             <button
                 class="accordion-button collapsed"
                 type="button"
@@ -18,10 +19,12 @@
                 :data-bs-target="'#panelsStayOpen-collapse' + trajec.trajectory_id"
                 aria-expanded="false"
                 :aria-controls="'panelsStayOpen-collapse' + trajec.trajectory_id">
-
-              Траектория {{trajec.trajectory_id}} ({{trajec.speciality_code}} - {{trajec.speciality_name}})
+              <span>Траектория {{trajec.trajectory_id}} ({{trajec.speciality_code}} - {{trajec.speciality_name}})</span>
 
             </button>
+
+
+
           </h2>
           <div
               :id="'panelsStayOpen-collapse' + trajec.trajectory_id"
@@ -34,7 +37,15 @@
               >
                 <li>
                   <div :id="disc.discipline_code" :value="disc.discipline_name"></div>
-                  <label>{{disc.discipline_name}}</label>
+                  <details>
+                    <summary><label>{{disc.discipline_name}}</label></summary>
+                    <div
+                        v-for="comp in disc.competences"
+                        :key="comp.competence_code"
+                    ><p>{{comp.competence_code}}</p></div>
+                  </details>
+
+
                 </li>
               </ul>
             </div>
@@ -57,7 +68,13 @@ export default {
   props:{
     all_trajectories:{
       type: Array,
-    }
+    },
+    student_trajectories:{
+      type: Array,
+    },
+  },
+  methods: {
+
   },
 }
 </script>
@@ -71,5 +88,8 @@ export default {
 }
 li{
   list-style-type: none;
+}
+.change_data_symbol{
+  color: red;
 }
 </style>

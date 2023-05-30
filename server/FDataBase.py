@@ -2,6 +2,7 @@ import json
 from owlready2 import *
 from psycopg2 import OperationalError
 import MyOntology
+import UploadProtegeFile
 
 with open('data.json', encoding='utf-8') as json_file:
     dictionary = json.load(json_file)
@@ -13,8 +14,23 @@ class FDataBase:
         self.__cur = db.cursor()
 
     def get_student(self, user_id):
-       pass
+        pass
 
+    def register_student(self, student):
+        insert_user_query = f"INSERT INTO users(login, password, role_id) " \
+                            f"VALUES ('{student['login']}', '{student['password']}', 2) " \
+                            f"returning user_id;"
+        self.__cur.execute(insert_user_query)
+        result_user_id = self.__cur.fetchone()
+        print('айди пользователя', result_user_id[0])
+        self.__db.commit()
+
+        insert_student_query = f"INSERT INTO student(record_book_number, surname, name, patronymic, e_mail, user_id) " \
+                               f"VALUES ({student['record_book_number']}, '{student['surname']}', " \
+                               f"'{student['name']}', '{student['patronymic']}', " \
+                               f"'{student['e_mail']}', {result_user_id[0]});"
+        self.__cur.execute(insert_student_query)
+        self.__db.commit()
 
     def check_and_get_user(self, login, password):
         check_user_query = f"SELECT user_id, login, password, role_id " \
@@ -47,13 +63,11 @@ class FDataBase:
             return result
 
     def set_trajectories_to_student(self, trajectories, stud_id):
-        del_query = f"DELETE FROM public.student_trajectories WHERE student_id = {stud_id};"
+        del_query = f"DELETE FROM student_trajectories WHERE student_id = {stud_id};"
         self.execute_query(del_query)
         for i in range(0, len(trajectories)):
             set_query = f"INSERT INTO student_trajectories(student_id, trajectory_id) VALUES ({stud_id}, {trajectories[i]});"
             self.execute_query(set_query)
-
-
 
     def execute_query(self, query):  # для неселектовых запросов
         try:
@@ -120,25 +134,39 @@ class FDataBase:
 
     def get_all_trajectories(self):  # получить все дисциплины (без семестров)
         trajectories_query = "SELECT trajectory_id, speciality_code, speciality_name " \
-                            "FROM trajectory;"
+                             "FROM trajectory;"
         try:
             result_tr = self.execute_query_select(trajectories_query)
             result_list = []
             all_disc_list = []
+            copmetence_list = []
             for tr in result_tr:
-                result_ds = self.get_dics_in_trajec(tr[0]) # получаем дисциплины из траектории с номером tr[0]
+                result_ds = self.get_dics_in_trajec(tr[0])  # получаем дисциплины из траектории с номером tr[0]
                 for ds in result_ds:
+                    result_competence = self.get_comp_in_dics(ds[0])  # получаем компетенции из дисциплины с номером ds[0]
+                    for cm in result_competence:
+                        result_comp = {
+                            'competence_code': cm[0]
+                        }
+                        copmetence_list.append(result_comp)
+                    comp_for_append_list = copmetence_list.copy()
                     result_dist = {
                         'discipline_code': ds[0],
                         'discipline_name': ds[1],
+                        'module_name': ds[2],
+                        'competences': comp_for_append_list
                     }
+                    copmetence_list.clear()
+
                     all_disc_list.append(result_dist)
+                list_for_append = all_disc_list.copy()
                 trajec = {
                     'trajectory_id': tr[0],
                     'speciality_code': tr[1],
                     'speciality_name': tr[2],
-                    'disciplines': all_disc_list
+                    'disciplines': list_for_append
                 }
+                all_disc_list.clear()
                 result_list.append(trajec)
             return result_list
         except:
@@ -156,12 +184,21 @@ class FDataBase:
             result_tr = self.execute_query_select(trajectories_query)
             result_list = []
             all_disc_list = []
+            copmetence_list = []
             for tr in result_tr:
-                result_ds = self.get_dics_in_trajec(tr[0]) # получаем дисциплины из траектории с номером tr[0]
+                result_ds = self.get_dics_in_trajec(tr[0])  # получаем дисциплины из траектории с номером tr[0]
                 for ds in result_ds:
+                    result_competence = self.get_comp_in_dics(ds[0])  # получаем компетенции из дисциплины с номером ds[0]
+                    for cm in result_competence:
+                        result_comp = {
+                            'competence_code': cm[0]
+                        }
+                        copmetence_list.append(result_comp)
                     result_dist = {
                         'discipline_code': ds[0],
                         'discipline_name': ds[1],
+
+                        'competenses': result_comp
                     }
                     all_disc_list.append(result_dist)
                 trajec = {
@@ -176,13 +213,22 @@ class FDataBase:
             print('Ошибка чтения траекторий студента из бд')
             return []
 
-    def get_dics_in_trajec(self, trajec_num):
-        dics_in_trajec_query = f"SELECT discipline_code, discipline_name " \
-                               f"FROM discipline_in_trajectory JOIN basic_discipline USING(discipline_code) " \
+    def get_dics_in_trajec(self, disc_num):
+        dics_in_trajec_query = f"SELECT discipline_code, discipline_name, module_name " \
+                               f"FROM discipline_in_trajectory " \
+                               f"JOIN basic_discipline " \
+                               f"USING(discipline_code) " \
+                               f"JOIN module_of_disciplines " \
+                               f"USING(module_code) " \
                                f"UNION " \
-                               f"SELECT discipline_code, discipline_name " \
-                               f"FROM discipline_in_trajectory JOIN elective_discipline USING(discipline_code) " \
-                               f"WHERE trajectory_id = {trajec_num};"
+                               f"SELECT discipline_code, discipline_name, module_name " \
+                               f"FROM discipline_in_trajectory " \
+                               f"JOIN elective_discipline " \
+                               f"USING(discipline_code) " \
+                               f"JOIN module_of_disciplines " \
+                               f"USING(module_code) " \
+                               f"WHERE trajectory_id = {disc_num};"
+        print(dics_in_trajec_query)
         try:
             result = self.execute_query_select(dics_in_trajec_query)
             return result
@@ -190,6 +236,18 @@ class FDataBase:
             print('Ошибка чтения дисциплин в траектории бд')
             return []
 
+    def get_comp_in_dics(self, dics_code):
+        comp_in_dics_query = f"SELECT competence_code, type_name " \
+                             f"FROM discipline_forms_competence " \
+                             f"JOIN competence USING(competence_code) " \
+                             f"JOIN competence_type USING(type_id) " \
+                             f"WHERE discipline_code='{dics_code}';"
+        try:
+            result = self.execute_query_select(comp_in_dics_query)
+            return result
+        except:
+            print('Ошибка чтения компетенций в дисциплине')
+            return []
 
     def get_all_students(self):  # получить всех студентов
         query = """SELECT surname, name, patronymic, record_book_number, e_mail, login, user_id 
@@ -200,9 +258,9 @@ class FDataBase:
             result = []
             for item in result_arr:
                 result.append({
-                    'surname' : item[0],
-                    'name' : item[1],
-                    'patronymic' : item[2],
+                    'surname': item[0],
+                    'name': item[1],
+                    'patronymic': item[2],
                     'record_book_number': item[3],
                     'e_mail': item[4],
                     'login': item[5],
@@ -213,7 +271,6 @@ class FDataBase:
             print('Ошибка чтения из бд')
             return []
 
-
     def get_all_disciplines_with_semester(self):
         disciplines_query = """SELECT discipline_name, taught_per_semester
             FROM basic_discipline
@@ -223,7 +280,6 @@ class FDataBase:
         disciplines_result = self.execute_query_select(disciplines_query)
         return disciplines_result
 
-
     def get_trajectory(self, chosen_discipline, user_id, record_book_number, f_name):
         stud = MyOntology.Student('Student_' + str(user_id), None,
                                   full_name=[f_name],
@@ -232,8 +288,8 @@ class FDataBase:
         owlready2.sync_reasoner_pellet()  # запуск решателя
 
         for choos_disc in chosen_discipline:
-            #query = f"INSERT INTO selected_disciplines(student_id, discipline_code) " \
-                    #f"VALUES ({rec_book_num}, {});"
+            # query = f"INSERT INTO selected_disciplines(student_id, discipline_code) " \
+            # f"VALUES ({rec_book_num}, {});"
             for item in MyOntology.Elective_discipline.instances():
                 if item.name == MyOntology.get_key(dictionary,
                                                    choos_disc):  # сравниваем поочерёдно все предметы из списка с введённым

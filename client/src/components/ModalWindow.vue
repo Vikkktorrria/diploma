@@ -32,6 +32,7 @@ export default {
   background: rgba(0,0,0,0.5);
   position: fixed;
   display: flex;
+
 }
 .dialog__content{
   margin: auto;
@@ -39,5 +40,7 @@ export default {
   border-radius: 12px;
   min-width: 100px;
   min-height: 100px;
+  max-height: 750px; /* Замените на желаемую высоту */
+  overflow-y: auto;
 }
 </style>

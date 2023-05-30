@@ -54,7 +54,7 @@ export default {
 
         this.$store.dispatch('updateUser', response.data.user); //сохраняю в локальный стор данные
 
-        this.$router.push({name: 'disciplines'})
+        this.$router.push({name: 'studentPage'})
       } catch (error) {
         if (error.response.status === 401) {
           console.log('Неверный логин или парольиус')

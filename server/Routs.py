@@ -39,7 +39,9 @@ def discipline():
         f_name = surname + name + patronymic
 
         trajectories = dbase.get_trajectory(choosen_disciplines, user_id, rec_book_num, f_name)  # полученные траектории
+        print('полученные траектории', trajectories)
         dbase.set_trajectories_to_student(trajectories, rec_book_num)  # добавляем траектории в бд
+
 
 
 @app.route('/trajectory/all', methods=['GET'])
@@ -49,9 +51,11 @@ def all_trajectories():
         return jsonify(all_trajec)
 
 
-@app.route('/trajectory/<stud_id>', methods=['GET'])
+@app.route('/trajectory/my', methods=['GET'])
 def stud_trajectories(stud_id):
     if request.method == 'GET':
+        data_from_client = request.json
+        print('Айди пользователя для которого нужно получить траектории', data_from_client)
         trajec = dbase.get_student_trajectories(stud_id)
         return jsonify(trajec)
 
@@ -111,11 +115,13 @@ def login():
     # Если они верны, создаем токен и возвращаем его клиенту
 
 
-@app.route('/logout')
-def logout():
-    print('пользователь пока')
-    #session.clear()
-    return redirect(url_for('login'))
+@app.route('/student/registration', methods=['POST'])
+def stud_registration():
+    student = request.json
+    dbase.register_student(student)
+    print(student)
+    return make_response('всё ок', 200)
+
 
 
 @app.route('/student/all')
