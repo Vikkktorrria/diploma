@@ -22,6 +22,8 @@
     </nav>
   </div>
 
+
+
 </template>
 
 <script>
@@ -33,9 +35,6 @@ export default {
     user() {
       return this.$store.getters.getUser; // Получение данных пользователя из геттера
     },
-    isAuth(){
-      return this.$store.getters.isAuth;
-    }
   },
   name: "nav-bar",
   methods: {
@@ -48,7 +47,6 @@ export default {
     },
   },
   mounted(){
-    print('Авторизация', this.isAuth)
     console.log(this.user.role_id);
   },
 }
