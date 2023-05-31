@@ -1,9 +1,11 @@
 <template>
+  <body>
   <div class="container-wrapper container">
     <section class="content col-lg-8 mx-auto">
+      <button class="btn"  @click="$router.push({name: 'studentRegistration'})">Регистрация студентов</button>
       <table>
         <thead>
-        <tr>
+        <tr class="header_row">
           <th>Фамилия</th>
           <th>Имя</th>
           <th>Отчество</th>
@@ -13,7 +15,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr
+        <tr class="content_row"
             v-for="student in all_students"
             :key="student.user_id"
             @click="showDialog(student)">
@@ -39,6 +41,7 @@
 
 
   </div>
+  </body>
 </template>
 
 <script>

@@ -16,7 +16,7 @@
           placeholder="Пароль"
       >
     </div>
-    <div class="form__button">
+    <div>
       <button type="submit" class="btn">
         Войти
       </button>

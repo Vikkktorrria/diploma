@@ -43,14 +43,6 @@ def discipline():
         dbase.set_trajectories_to_student(trajectories, rec_book_num)  # добавляем траектории в бд
 
 
-
-@app.route('/trajectory/all', methods=['GET'])
-def all_trajectories():
-    if request.method == 'GET':
-        all_trajec = dbase.get_all_trajectories()
-        return jsonify(all_trajec)
-
-
 @app.route('/trajectory/my', methods=['GET'])
 def stud_trajectories(stud_id):
     if request.method == 'GET':
@@ -60,6 +52,35 @@ def stud_trajectories(stud_id):
         return jsonify(trajec)
 
 
+# ================================  ВСЕ ДИСЦИПЛИНЫ, КОМПЕТЕНЦИИ, ТРАЕКТОРИИ, СТУДЕНТЫ ==============================
+@app.route('/disciplines/all', methods=['GET', 'POST'])
+def all_discipline():
+    if request.method == 'GET':
+        return jsonify(all_disciplines)
+
+
+@app.route('/competences/all', methods=['GET', 'POST'])
+def all_competences():
+    if request.method == 'GET':
+        return jsonify(all_competenses)
+
+
+@app.route('/trajectory/all', methods=['GET'])
+def all_trajectories():
+    if request.method == 'GET':
+        all_trajec = dbase.get_all_trajectories()
+        return jsonify(all_trajec)
+
+
+@app.route('/student/all')
+def get_all_stud():
+    if request.method == 'GET':
+        all_students = dbase.get_all_students()
+        return jsonify(all_students)
+# =================================================================================================================
+
+
+# ======================== вход и регистрация ================================
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -122,13 +143,8 @@ def stud_registration():
     print(student)
     return make_response('всё ок', 200)
 
+# =================================================================================
 
-
-@app.route('/student/all')
-def get_all_stud():
-    if request.method == 'GET':
-        all_students = dbase.get_all_students()
-        return jsonify(all_students)
 
 
 
@@ -141,13 +157,15 @@ def before_first_request():
 @app.before_request
 def before_request():
     """Установление соединения с БД перед выполнением"""
-    global dbase, basic_disciplines, elective_disciplines, all_trajectories
+    global dbase, basic_disciplines, elective_disciplines, all_trajectories, all_disciplines, all_competenses
     db = cn.get_db()
     dbase = fdb.FDataBase(db)
 
     basic_disciplines = dbase.get_basic_disciplines()
     elective_disciplines = dbase.get_elective_disciplines()
     all_trajectories = dbase.get_all_trajectories()
+    all_disciplines = dbase.get_all_disciplines()
+    all_competenses = dbase.get_all_competences()
 
 
     #print('before_request() called')

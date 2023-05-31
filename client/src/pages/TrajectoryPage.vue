@@ -1,4 +1,5 @@
 <template>
+  <body>
     <div class="container-wrapper container">
       <section class="content col-lg-8 mx-auto">
         <trajectory-form v-if="this.user.role_id === 2"
@@ -11,7 +12,7 @@
         >
           <table>
             <thead>
-            <tr>
+            <tr class="header_row">
               <th>Номер траектории</th>
               <th>Код специальности</th>
               <th>Название специальности</th>
@@ -19,7 +20,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr
+            <tr class="content_row"
                 v-for="trajec in all_trajectories"
                 :key="trajec.trajectory_id"
                 @click="showDialog(trajec)">
@@ -51,6 +52,7 @@
 
 
     </div>
+    </body>
 </template>
 
 <script>
@@ -83,7 +85,7 @@ export default {
         const response = await axios.get('trajectory/all');
         this.all_trajectories = response.data;
       } catch(e){
-        alert('Ошибка получения дисциплин');
+        alert('Ошибка получения траекторий');
       }
     },
     async fetchStudentTrajectories(student_id) { // функция для получения данных с сервера

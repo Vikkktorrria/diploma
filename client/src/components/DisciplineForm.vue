@@ -3,7 +3,6 @@
     <form @submit.prevent>
       <div class="accordion" id="accordionPanelsStayOpenExample">
 
-
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-heading1">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse1" aria-expanded="false" aria-controls="panelsStayOpen-collapse1">
@@ -13,7 +12,7 @@
           <div id="panelsStayOpen-collapse1" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading1">
             <div class="accordion-body">
               <ul id="array-rendering"
-                  v-for="item in all_disciplines"
+                  v-for="item in elective_disciplines"
                   :key="item.discipline_code"
               >
                 <li  v-if="item.module_name === 'Общие'"
@@ -38,7 +37,7 @@
           <div id="panelsStayOpen-collapse2" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading2">
             <div class="accordion-body">
               <ul id="array-rendering"
-                  v-for="item in all_disciplines"
+                  v-for="item in elective_disciplines"
                   :key="item.discipline_code"
               >
                 <li  v-if="item.module_name === 'Системное администрирования автоматизированных систем управления'"
@@ -61,7 +60,7 @@
           <div id="panelsStayOpen-collapse3" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading3">
             <div class="accordion-body">
               <ul id="array-rendering"
-                  v-for="item in all_disciplines"
+                  v-for="item in elective_disciplines"
                   :key="item.discipline_code"
               >
                 <li  v-if="item.module_name === 'Хранение и обработка данных в автоматизированных системах управления'"
@@ -84,7 +83,7 @@
           <div id="panelsStayOpen-collapse4" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading4">
             <div class="accordion-body">
               <ul id="array-rendering"
-                  v-for="item in all_disciplines"
+                  v-for="item in elective_disciplines"
                   :key="item.discipline_code"
               >
                 <li  v-if="item.module_name === 'Внедрение и сопровождение автоматизированных систем управления'"
@@ -107,7 +106,7 @@
           <div id="panelsStayOpen-collapse5" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading5">
             <div class="accordion-body">
               <ul id="array-rendering"
-                  v-for="item in all_disciplines"
+                  v-for="item in elective_disciplines"
                   :key="item.discipline_code"
               >
                 <li  v-if="item.module_name === 'Элективные дисциплины по физической культуре и спорту'"
@@ -141,7 +140,7 @@
               aria-labelledby="panelsStayOpen-heading6">
             <div class="accordion-body">
               <ul id="array-rendering"
-                  v-for="item in all_disciplines"
+                  v-for="item in elective_disciplines"
                   :key="item.discipline_code"
               >
                 <li  v-if="item.module_name === 'Элективные дисциплины 1'"
@@ -164,7 +163,7 @@
           <div id="panelsStayOpen-collapse7" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading7">
             <div class="accordion-body">
               <ul id="array-rendering"
-                  v-for="item in all_disciplines"
+                  v-for="item in elective_disciplines"
                   :key="item.discipline_code"
               >
                 <li  v-if="item.module_name === 'Элективные дисциплины 2'"
@@ -187,7 +186,7 @@
           <div id="panelsStayOpen-collapse8" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading8">
             <div class="accordion-body">
               <ul id="array-rendering"
-                  v-for="item in all_disciplines"
+                  v-for="item in elective_disciplines"
                   :key="item.discipline_code"
               >
                 <li  v-if="item.module_name === 'Элективные дисциплины 3'"

@@ -42,7 +42,7 @@
                     <div
                         v-for="comp in disc.competences"
                         :key="comp.competence_code"
-                    ><p>{{comp.competence_code}}</p></div>
+                    ><p class="accordion_details">{{comp.competence_code}}</p></div>
                   </details>
 
 

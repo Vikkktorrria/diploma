@@ -1,23 +1,38 @@
 <template>
-  <div class="change_data_table">
-    <h2>Редактирование траектории</h2>
+  <div class="change_data_modal_table">
+    <div class="change_data_header_table">Редактирование траектории</div>
     <p><strong>Номер траектории:</strong><input :value="this.trajectory.trajectory_id"></p>
     <p><strong>Код специальности:</strong><input :value="this.trajectory.speciality_code"></p>
     <p><strong>Название специальности:</strong><input :value="this.trajectory.speciality_name"></p>
     <details>
-      <summary><label>Дисциплины</label></summary>
-      <div class="disciplines_list"
-          v-for="dics in trajectory.disciplines"
+      <summary><strong>Дисциплины</strong></summary>
+      <div
+          v-for="dics in all_disciplines"
           :key="dics.discipline_code"
-      ><p>{{ dics.discipline_name}}</p></div>
+      ><p>
+        <input
+          type="checkbox"
+          :checked="isDisciplineInTrajectory(dics.discipline_code)"
+          @change="toggleDisciplineSelection(dics.discipline_code)"
+        >
+        {{ dics.discipline_name}}
+      </p></div>
     </details>
 
   </div>
-  <button>Сохранить</button>
+  <button class="btn">Сохранить</button>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+  data(){
+    return{
+      all_disciplines: [],
+      selected_disciplines: [],
+    }
+  },
   name: "trajectory-table",
   props: {
     trajectory: {
@@ -25,23 +40,40 @@ export default {
       required: true,
     },
   },
+  methods: {
+    async fetchDisciplines() { // функция для получения данных с сервера
+      try{
+        const response = await axios.get('/disciplines/all');
+        this.all_disciplines = response.data;
+        this.selected_disciplines = this.trajectory.disciplines;
+        console.log(this.all_disciplines)
+      } catch(e){
+        alert('Ошибка получения дисциплин');
+      }
+    },
+    isDisciplineInTrajectory(disciplineId) {
+      if (this.selected_disciplines.some(selectedDisciplines => selectedDisciplines.discipline_code === disciplineId)) {
+        console.log('Match found');
+        return true;
+      //return this.selectedDisciplines.includes(disciplineId);
+      }
+    },
+    toggleDisciplineSelection(disciplineId) {
+      const index = this.selected_disciplines.indexOf(disciplineId);
+      if (index === -1) {
+        this.selected_disciplines.push(disciplineId);
+      } else {
+        this.selected_disciplines.splice(index, 1);
+      }
+    },
+  },
   mounted(){
     console.log(this.trajectory)
+    this.fetchDisciplines()
   },
 }
 
 </script>
 
 <style scoped>
-.modal {
-  /* Стили для модального окна */
-}
-
-.modal-content {
-  /* Стили для содержимого модального окна */
-}
-
-.close {
-  /* Стили для кнопки закрытия модального окна */
-}
 </style>

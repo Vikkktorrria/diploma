@@ -36,11 +36,12 @@ export default {
 }
 .dialog__content{
   margin: auto;
-  background: white;
+  background: #fcfcfc;
   border-radius: 12px;
   min-width: 100px;
   min-height: 100px;
   max-height: 750px; /* Замените на желаемую высоту */
   overflow-y: auto;
+  padding: 15px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="login_form_elem col-7 mx-auto">
-    <form @submit.prevent="studentRegistrationData">
+    <form class="reg_stud_form" @submit.prevent="studentRegistrationData">
       <div class="form__el">
         <input
             v-model="student.surname"
@@ -108,9 +108,12 @@ export default {
   border: none;
   outline: none;
   border-bottom: 2px solid #f0f0f0;
-  padding: 15px 20px;
+  padding: 12px 20px;
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 18px;
   color: #35538d;
+}
+.reg_stud_form{
+  margin-top: 65px;
 }
 </style>

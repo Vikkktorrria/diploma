@@ -3,7 +3,7 @@ import UserProfile from "@/pages/UserProfile";
 import LogIn from "@/pages/LogIn";
 import StudentPage from "@/pages/StudentPage";
 import StudentRegistration from "@/pages/StudentRegistration";
-import DisciplinesPage from "@/pages/DisciplinesPage";
+import DisciplinesPage from "@/pages/DisciplinePage";
 import TrajectoryPage from "@/pages/TrajectoryPage";
 import TempPage from "@/pages/TempPage";
 
@@ -28,6 +28,7 @@ const routes = [
     },
     {
         path: '/student/registration',
+        name: 'studentRegistration',
         component: StudentRegistration
     },
     {

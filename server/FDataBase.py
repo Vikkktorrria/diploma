@@ -85,17 +85,39 @@ class FDataBase:
         except OperationalError as e:
             print(f"The error '{e}' occurred")
 
-    def get_all_disciplines(self):  # получить все дисциплины (без семестров)
-        disciplines_query = """SELECT discipline_name
-            FROM basic_discipline
-            UNION SELECT discipline_name
-            FROM elective_discipline;"""
+    def get_all_disciplines(self):  # получить все дисциплины c компетенциями
+        disciplines_query = """SELECT discipline_code, discipline_name, module_name, taught_per_semester
+                    FROM basic_discipline 
+                    JOIN module_of_disciplines 
+                    USING(module_code)
+                    UNION 
+                    SELECT discipline_code, discipline_name, module_name, taught_per_semester
+                    FROM elective_discipline
+                    JOIN module_of_disciplines 
+                    USING(module_code);"""
         try:
-            result = self.execute_query_select(disciplines_query)
-            result_list = []
-            for item in result:
-                result_list.append(str(item[0]))
-            return result_list
+            result_ds = self.execute_query_select(disciplines_query)
+            all_disc_list = []
+            copmetence_list = []
+            for ds in result_ds:
+                result_competence = self.get_comp_in_dics(ds[0])  # получаем компетенции из дисциплины с номером ds[0]
+                for cm in result_competence:
+                    result_comp = {
+                        'competence_code': cm[0],
+                        'type_name': cm[1]
+                    }
+                    copmetence_list.append(result_comp)
+                    comp_for_append_list = copmetence_list.copy()
+                result_dist = {
+                    'discipline_code': ds[0],
+                    'discipline_name': ds[1],
+                    'module_name': ds[2],
+                    'taught_per_semester': ds[3],
+                    'competences': comp_for_append_list
+                }
+                copmetence_list.clear()
+                all_disc_list.append(result_dist)
+            return all_disc_list
         except:
             print('Ошибка чтения из бд')
             return []
@@ -197,8 +219,7 @@ class FDataBase:
                     result_dist = {
                         'discipline_code': ds[0],
                         'discipline_name': ds[1],
-
-                        'competenses': result_comp
+                        'competences': result_comp
                     }
                     all_disc_list.append(result_dist)
                 trajec = {
@@ -249,12 +270,31 @@ class FDataBase:
             print('Ошибка чтения компетенций в дисциплине')
             return []
 
+    def get_all_competences(self):
+        comp_query = """SELECT competence_code, type_name
+                FROM discipline_forms_competence
+                JOIN competence USING(competence_code) 
+                JOIN competence_type USING(type_id) """
+
+        try:
+            result = self.execute_query_select(comp_query)
+            comp_list = []
+            for cm in result:
+                competense = {
+                    'competence_code': cm[0],
+                    'type_name': cm[1],
+                }
+                comp_list.append(competense)
+            return comp_list
+        except:
+            print('Ошибка чтения компетенций в дисциплине')
+            return []
+
     def get_all_students(self):  # получить всех студентов
         query = """SELECT surname, name, patronymic, record_book_number, e_mail, login, user_id 
 	FROM users JOIN student USING (user_id);"""
         try:
             result_arr = self.execute_query_select(query)
-            print(result_arr[0][0])
             result = []
             for item in result_arr:
                 result.append({

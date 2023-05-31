@@ -1,6 +1,6 @@
 <template>
-    <div class="change_data_table">
-      <h2>Редактирование студента</h2>
+    <div class="change_data_modal_table">
+      <div class="change_data_header_table">Редактирование студента</div>
       <p><strong>Фамилия:</strong><input :value="this.student.surname"></p>
       <p><strong>Имя:</strong><input :value="this.student.name"></p>
       <p><strong>Отчество:</strong><input :value="this.student.patronymic"></p>
@@ -8,7 +8,7 @@
       <p><strong>Эл.почта:</strong><input :value="this.student.e_mail"></p>
       <p><strong>Логин:</strong><input :value="this.student.login"></p>
     </div>
-  <button>Сохранить</button>
+  <button class="btn">Сохранить</button>
 </template>
 
 <script>
@@ -28,15 +28,4 @@ export default {
 </script>
 
 <style scoped>
-.modal {
-  /* Стили для модального окна */
-}
-
-.modal-content {
-  /* Стили для содержимого модального окна */
-}
-
-.close {
-  /* Стили для кнопки закрытия модального окна */
-}
 </style>

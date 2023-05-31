@@ -1,5 +1,5 @@
 <template>
-
+  <body>
   <div class="container-wrapper container">
     <section class="content col-lg-8 mx-auto">
 
@@ -8,14 +8,12 @@
       >
       </registration-form>
 
-      <footer class="footer row">
-
-      </footer>
 
     </section>
 
 
   </div>
+  </body>
 </template>
 
 <script>
