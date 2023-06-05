@@ -7,6 +7,7 @@ import DisciplinesPage from "@/pages/DisciplinePage";
 import TrajectoryPage from "@/pages/TrajectoryPage";
 import TempPage from "@/pages/TempPage";
 import SettingsPage from "@/pages/SettingsPage";
+import CompetencePage from "@/pages/CompetencePage";
 
 const routes = [
     {
@@ -50,6 +51,10 @@ const routes = [
     {
         path: '/settings',
         component: SettingsPage
+    },
+    {
+        path: '/competence',
+        component: CompetencePage
     },
 ]
 

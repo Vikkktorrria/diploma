@@ -13,7 +13,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Номер зачётной книжки студента</h5>
-          {{ this.user.rec_book_num }}
+          {{ this.user.record_book_number }}
         </div>
       </div>
     </div>

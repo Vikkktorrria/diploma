@@ -10,7 +10,7 @@ export const authModule = {
             user_id: null,
             role_id: null,
         },
-        isAuth: false
+        isAuth: false,
     },
     mutations: {
         setUser(state, current_user){

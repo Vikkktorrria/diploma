@@ -22,7 +22,6 @@ class FDataBase:
                             f"returning user_id;"
         self.__cur.execute(insert_user_query)
         result_user_id = self.__cur.fetchone()
-        print('айди пользователя', result_user_id[0])
         self.__db.commit()
 
         insert_student_query = f"INSERT INTO student(record_book_number, surname, name, patronymic, e_mail, user_id) " \
@@ -195,13 +194,58 @@ class FDataBase:
             print('Ошибка чтения всех траекторий из бд')
             return []
 
+
+    def set_choosen_disc(self, stud_id, dist_list):
+        code_dist_list = []
+        delete_query = f"DELETE FROM selected_disciplines WHERE student_id={stud_id};"
+        self.execute_query(delete_query)
+        for dict in dist_list:
+            get_code_query = f"SELECT discipline_code " \
+                        f"FROM elective_discipline " \
+                        f"WHERE discipline_name='{dict}';"
+            try:
+                res = list(self.execute_query_select(get_code_query)[0])
+                for i in res:
+                    code_dist_list.append(i)
+            except:
+                print('Ошибка получения кодов ', dict)
+        print('Полученные коды', res)
+        for c_dist in code_dist_list:
+            insert_dist_query = f"INSERT INTO selected_disciplines(student_id, discipline_code) " \
+                            f"VALUES ('{stud_id}', '{c_dist}');"
+            print(insert_dist_query)
+            try:
+                self.execute_query(insert_dist_query)
+            except:
+                print('Ошибка установки дисциплины ')
+
+
+    def get_choosen_dist(self, stud_id):
+        get_stud_dist_query = f"SELECT discipline_name " \
+                              f"FROM selected_disciplines " \
+                              f"JOIN elective_discipline " \
+                              f"USING(discipline_code) " \
+                              f"WHERE student_id={stud_id};"
+        print(get_stud_dist_query)
+        result_dist = []
+        try:
+            res = list(self.execute_query_select(get_stud_dist_query))
+            for i in res:
+                result_dist.append(i)
+            print('дисциплины которые чел выбрал', res)
+            return result_dist
+        except:
+            print('Ошибка получения выбранных дисциплин')
+            return []
+
     def get_student_trajectories(self, stud_id):
         trajectories_query = f"SELECT trajectory.trajectory_id, trajectory.speciality_code, trajectory.speciality_name " \
                              f"FROM trajectory JOIN student_trajectories " \
                              f"ON trajectory.trajectory_id = student_trajectories.trajectory_id " \
                              f"JOIN student " \
                              f"ON student_trajectories.student_id = student.record_book_number " \
-                             f"WHERE student_id={2345552}"
+                             f"WHERE student_id={stud_id}"
+        print(trajectories_query)
         try:
             result_tr = self.execute_query_select(trajectories_query)
             result_list = []
@@ -210,24 +254,31 @@ class FDataBase:
             for tr in result_tr:
                 result_ds = self.get_dics_in_trajec(tr[0])  # получаем дисциплины из траектории с номером tr[0]
                 for ds in result_ds:
-                    result_competence = self.get_comp_in_dics(ds[0])  # получаем компетенции из дисциплины с номером ds[0]
+                    result_competence = self.get_comp_in_dics(
+                        ds[0])  # получаем компетенции из дисциплины с номером ds[0]
                     for cm in result_competence:
                         result_comp = {
                             'competence_code': cm[0]
                         }
                         copmetence_list.append(result_comp)
+                    comp_for_append_list = copmetence_list.copy()
                     result_dist = {
                         'discipline_code': ds[0],
                         'discipline_name': ds[1],
-                        'competences': result_comp
+                        'module_name': ds[2],
+                        'competences': comp_for_append_list
                     }
+                    copmetence_list.clear()
+
                     all_disc_list.append(result_dist)
+                list_for_append = all_disc_list.copy()
                 trajec = {
                     'trajectory_id': tr[0],
                     'speciality_code': tr[1],
                     'speciality_name': tr[2],
-                    'disciplines': all_disc_list
+                    'disciplines': list_for_append
                 }
+                all_disc_list.clear()
                 result_list.append(trajec)
             return result_list
         except:
@@ -249,7 +300,6 @@ class FDataBase:
                                f"JOIN module_of_disciplines " \
                                f"USING(module_code) " \
                                f"WHERE trajectory_id = {disc_num};"
-        print(dics_in_trajec_query)
         try:
             result = self.execute_query_select(dics_in_trajec_query)
             return result
@@ -271,10 +321,9 @@ class FDataBase:
             return []
 
     def get_all_competences(self):
-        comp_query = """SELECT DISTINCT competence_code, type_name
-                FROM discipline_forms_competence
-                JOIN competence USING(competence_code) 
-                JOIN competence_type USING(type_id);"""
+        comp_query = """SELECT competence_code, type_name, description
+	                        FROM competence JOIN competence_type
+                            USING(type_id);"""
 
         try:
             result = self.execute_query_select(comp_query)
@@ -283,6 +332,7 @@ class FDataBase:
                 competense = {
                     'competence_code': cm[0],
                     'type_name': cm[1],
+                    'description': cm[2],
                 }
                 comp_list.append(competense)
             return comp_list

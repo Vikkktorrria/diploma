@@ -106,6 +106,7 @@ export default {
     this.fetchAllDisciplines();
     this.fetchElectiveDisciplines();
     console.log('дисциплины получаются');
+    console.log(this.elective_disciplines)
   },
 }
 </script>

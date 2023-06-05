@@ -3,6 +3,7 @@
       <section class="content col-lg-8 mx-auto">
         <trajectory-form v-if="this.user.role_id === 2"
             v-bind:all_trajectories="all_trajectories"
+            v-bind:stud_trajectories="stud_trajectories.length > 0 ? stud_trajectories : null"
         />
 
 
@@ -94,8 +95,17 @@ export default {
     },
     async fetchStudentTrajectories(student_id) { // функция для получения данных с сервера
       try{
-        const response = await axios.get('trajectory/my', student_id);
+        const response = await axios.get('trajectory/my', {
+          params: {
+            student_id: student_id
+          }
+        });
         this.stud_trajectories = response.data;
+        console.log(this.all_trajectories)
+        console.log(this.stud_trajectories)
+        if (this.stud_trajectories.length == 0){
+          this.stud_trajectories = 'Построенных траекторий пока нет';
+        }
       } catch(e){
         alert('Ошибка получения дисциплин');
       }
@@ -108,6 +118,9 @@ export default {
   },
   mounted(){
     this.fetchAllTrajectories();
+    if (this.user.role_id === 2){
+      this.fetchStudentTrajectories(this.user.record_book_number);
+    }
     console.log('дисциплины получаются');
   },
 }

@@ -1,8 +1,9 @@
 <template>
   <div class="login_form_elem col-10 mx-auto">
     <form @submit.prevent>
-      <div class="accordion" id="accordionPanelsStayOpenExample">
 
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+        <strong><p class="disc_header">Выберите интересующие Вас дисциплины</p></strong>
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-heading1">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse1" aria-expanded="false" aria-controls="panelsStayOpen-collapse1">
@@ -245,11 +246,9 @@ export default {
           'disciplines': this.checkedDisciplines, // выбранные дисциплины
           'student': user,
         }
-        const response = await axios.post('disciplines', this.data_for_submit);
+        console.log('данные для отправки', this.data_for_submit)
+        await axios.post('disciplines', this.data_for_submit);
         // передаём дисциплины и пользователя
-        console.log(response.data)
-        console.log('Дисциплины сохранились и отправляются')
-
         this.$router.push({
           name: 'trajectory',
         })
@@ -276,5 +275,12 @@ button{
 }
 li{
   list-style-type: none;
+}
+label{
+  margin-left: 10px;
+}
+.disc_header{
+  text-align: center;
+  font-size: 20px;
 }
 </style>

@@ -20,6 +20,7 @@
       <router-link to="/profile" :class="['my_nbar_link', 'nav-link', { active: $route.path === '/profile' }]" aria-current="page">Профиль</router-link>
       <router-link to="/disciplines" :class="['my_nbar_link', 'nav-link', { active: $route.path === '/disciplines' }]">Дисциплины</router-link>
       <router-link to="/trajectory" :class="['my_nbar_link', 'nav-link', { active: $route.path === '/trajectory' }]">Траектории</router-link>
+      <router-link to="/competence" :class="['my_nbar_link', 'nav-link', { active: $route.path === '/competence' }]">Компетенции</router-link>
       <router-link to="/settings" :class="['my_nbar_link', 'nav-link', { active: $route.path === '/settings' }]">Настройки</router-link>
     </nav>
   </div>
