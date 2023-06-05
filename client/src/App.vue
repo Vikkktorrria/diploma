@@ -1,10 +1,10 @@
 <template>
-  <div class="app">
-    <nav-bar v-if="isAuth"></nav-bar>
-    <router-view></router-view>
-  </div>
-  <div class="container-wrapper container">
 
+  <div class="app">
+    <header>
+      <nav-bar v-if="isAuth"></nav-bar>
+      <router-view></router-view>
+    </header>
   </div>
 </template>
 

@@ -3,8 +3,8 @@
     <div class="user-card col-7 mx-auto"> <!-- элемент с фото и фио пользователя (mx-auto) выравнивает элементы посередине -->
       <div class="card user">
         <div class="card-body">
-          <img class="card_user_image" src="img/ico.png" alt="иконка">
-          <div class="card-title">{{ this.user.name }}
+          <img class="card_user_image" src="../assets/user_ico.png" alt="иконка">
+          <div class="card-title">{{ this.user.surname }} {{ this.user.name }} {{ this.user.patronymic }}
           </div>
         </div>
       </div>
@@ -40,7 +40,10 @@ export default {
     },
   },
   name: "user-form",
-  components: {}
+  components: {},
+  mounted(){
+    console.log(this.user);
+  },
 }
 </script>
 

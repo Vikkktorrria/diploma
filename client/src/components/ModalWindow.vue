@@ -42,6 +42,8 @@ export default {
   min-height: 100px;
   max-height: 750px; /* Замените на желаемую высоту */
   overflow-y: auto;
+  width: auto;
+  height: auto;
   padding: 15px;
 }
 </style>

@@ -271,10 +271,10 @@ class FDataBase:
             return []
 
     def get_all_competences(self):
-        comp_query = """SELECT competence_code, type_name
+        comp_query = """SELECT DISTINCT competence_code, type_name
                 FROM discipline_forms_competence
                 JOIN competence USING(competence_code) 
-                JOIN competence_type USING(type_id) """
+                JOIN competence_type USING(type_id);"""
 
         try:
             result = self.execute_query_select(comp_query)

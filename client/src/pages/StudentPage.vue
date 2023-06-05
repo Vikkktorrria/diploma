@@ -1,17 +1,15 @@
 <template>
-  <body>
   <div class="container-wrapper container">
     <section class="content col-lg-8 mx-auto">
       <button class="btn"  @click="$router.push({name: 'studentRegistration'})">Регистрация студентов</button>
       <table>
         <thead>
         <tr class="header_row">
+          <th>Номер зачётной книжки</th>
           <th>Фамилия</th>
           <th>Имя</th>
           <th>Отчество</th>
-          <th>Номер зачётной книжки</th>
           <th>Эл.почта</th>
-          <th>Логин</th>
         </tr>
         </thead>
         <tbody>
@@ -19,12 +17,11 @@
             v-for="student in all_students"
             :key="student.user_id"
             @click="showDialog(student)">
+          <td>{{ student.record_book_number }}</td>
           <td>{{ student.surname }}</td>
           <td>{{ student.name }}</td>
           <td>{{ student.patronymic }}</td>
-          <td>{{ student.record_book_number }}</td>
           <td>{{ student.e_mail }}</td>
-          <td>{{ student.login }}</td>
         </tr>
         </tbody>
       </table>
@@ -41,7 +38,6 @@
 
 
   </div>
-  </body>
 </template>
 
 <script>

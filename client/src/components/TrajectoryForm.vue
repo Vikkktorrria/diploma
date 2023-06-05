@@ -92,4 +92,7 @@ li{
 .change_data_symbol{
   color: red;
 }
+summary{
+  font-size: 16px;
+}
 </style>

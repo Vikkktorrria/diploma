@@ -1,5 +1,4 @@
 <template>
-  <body>
   <div class="container-wrapper container">
     <section class="content col-lg-8 mx-auto">
 
@@ -13,7 +12,6 @@
 
 
   </div>
-  </body>
 </template>
 
 <script>

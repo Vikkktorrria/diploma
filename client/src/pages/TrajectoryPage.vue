@@ -1,5 +1,4 @@
 <template>
-  <body>
     <div class="container-wrapper container">
       <section class="content col-lg-8 mx-auto">
         <trajectory-form v-if="this.user.role_id === 2"
@@ -23,18 +22,24 @@
             <tr class="content_row"
                 v-for="trajec in all_trajectories"
                 :key="trajec.trajectory_id"
-                @click="showDialog(trajec)">
+                @dblclick="showDialog(trajec)">
               <td>{{ trajec.trajectory_id }}</td>
               <td>{{ trajec.speciality_code }}</td>
               <td>{{ trajec.speciality_name }}</td>
 
               <td>
                 <details>
-                <summary><label>Дисциплины</label></summary>
-                  <div
-                      v-for="dics in trajec.disciplines"
-                      :key="dics.discipline_code"
-                  ><p>{{ dics.discipline_name}}</p></div>
+                  <summary><label></label></summary>
+                  <ul>
+                      <div
+                        v-for="dics in trajec.disciplines"
+                        :key="dics.discipline_code"
+                    >
+                        <li class="disciplines_list"><p>{{ dics.discipline_name}}</p></li>
+                      </div>
+                  </ul>
+
+
               </details>
               </td>
             </tr>
@@ -52,7 +57,6 @@
 
 
     </div>
-    </body>
 </template>
 
 <script>
@@ -108,3 +112,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.disciplines_list{
+  text-align: left;
+}
+.content_row{
+  vertical-align: top;
+}
+</style>

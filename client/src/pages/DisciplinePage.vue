@@ -1,5 +1,4 @@
 <template>
-  <body>
   <div class="container-wrapper container">
     <section class="content col-lg-8 mx-auto">
     <disciplines-form v-if="this.user.role_id === 2"
@@ -12,9 +11,9 @@
           <thead>
           <tr class="header_row">
             <th>Код</th>
+            <th>Начало преподавания (семестр)</th>
             <th>Название</th>
             <th>Модуль</th>
-            <th>Начало преподавания (семестр)</th>
             <th>Компетенции</th>
           </tr>
           </thead>
@@ -24,9 +23,9 @@
               :key="disc.discipline_code"
               @click="showDialog(disc)">
             <td>{{ disc.discipline_code }}</td>
+            <td>{{ disc.taught_per_semester }}</td>
             <td>{{ disc.discipline_name }}</td>
             <td>{{ disc.module_name }}</td>
-            <td>{{ disc.taught_per_semester }}</td>
             <td>
                 <div
                     v-for="comp in disc.competences"
@@ -50,7 +49,6 @@
 
 
   </div>
-  </body>
 </template>
 
 <script>

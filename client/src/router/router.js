@@ -6,6 +6,7 @@ import StudentRegistration from "@/pages/StudentRegistration";
 import DisciplinesPage from "@/pages/DisciplinePage";
 import TrajectoryPage from "@/pages/TrajectoryPage";
 import TempPage from "@/pages/TempPage";
+import SettingsPage from "@/pages/SettingsPage";
 
 const routes = [
     {
@@ -14,6 +15,7 @@ const routes = [
     },
     {
         path: '/profile',
+        name: 'profile',
         component: UserProfile
     },
     {
@@ -44,6 +46,10 @@ const routes = [
     {
         path: '/test',
         component: TempPage
+    },
+    {
+        path: '/settings',
+        component: SettingsPage
     },
 ]
 

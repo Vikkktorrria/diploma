@@ -198,13 +198,13 @@
             </div>
           </div>
         </div>
-        <button
+        <button class="btn"
             type="submit"
             @click="submitDisciplines"
         >
           Сохранить
         </button>
-        <button>Сбросить выбор</button>
+        <button class="btn">Сбросить выбор</button>
 
       </div>
     </form>
@@ -226,7 +226,7 @@ export default {
     }
   },
   props:{
-    all_disciplines:{
+    elective_disciplines:{
       type: Array,
     }
   },
@@ -270,6 +270,9 @@ export default {
   margin-top: 50px;
 }
 .accordion-item{
+}
+button{
+  text-align: center;
 }
 li{
   list-style-type: none;

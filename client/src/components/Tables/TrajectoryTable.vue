@@ -1,21 +1,21 @@
 <template>
   <div class="change_data_modal_table">
     <div class="change_data_header_table">Редактирование траектории</div>
-    <p><strong>Номер траектории:</strong><input :value="this.trajectory.trajectory_id"></p>
-    <p><strong>Код специальности:</strong><input :value="this.trajectory.speciality_code"></p>
-    <p><strong>Название специальности:</strong><input :value="this.trajectory.speciality_name"></p>
+    <p><strong>Номер траектории:</strong><input :value="this.trajectory.trajectory_id" class="table_data_input disabled" disabled></p>
+    <p><strong>Код специальности:</strong><input :value="this.trajectory.speciality_code" class="table_data_input"></p>
+    <p><strong>Название специальности:</strong><input :value="this.trajectory.speciality_name" class="table_data_input"></p>
     <details>
       <summary><strong>Дисциплины</strong></summary>
       <div
-          v-for="dics in all_disciplines"
+          v-for="dics in selected_disciplines"
           :key="dics.discipline_code"
-      ><p>
-        <input
+      ><p class="mark_list_in_table">
+       <!-- <input
           type="checkbox"
           :checked="isDisciplineInTrajectory(dics.discipline_code)"
           @change="toggleDisciplineSelection(dics.discipline_code)"
-        >
-        {{ dics.discipline_name}}
+        > -->
+        • {{ dics.discipline_name}}
       </p></div>
     </details>
 
@@ -52,7 +52,7 @@ export default {
       }
     },
     isDisciplineInTrajectory(disciplineId) {
-      if (this.selected_disciplines.some(selectedDisciplines => selectedDisciplines.discipline_code === disciplineId)) {
+      if (this.selected_disciplines.some(selected_disciplines => selected_disciplines.discipline_code === disciplineId)) {
         console.log('Match found');
         return true;
       //return this.selectedDisciplines.includes(disciplineId);
@@ -76,4 +76,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

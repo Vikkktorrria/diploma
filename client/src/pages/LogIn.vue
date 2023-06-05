@@ -1,5 +1,4 @@
 <template>
-  <body>
   <div class="container-wrapper container">
 
     <section class="content col-lg-8 mx-auto">
@@ -16,7 +15,6 @@
 
 
   </div>
-  </body>
 </template>
 
 <script>
@@ -54,7 +52,14 @@ export default {
 
         this.$store.dispatch('updateUser', response.data.user); //сохраняю в локальный стор данные
 
-        this.$router.push({name: 'studentPage'})
+
+        if (response.data.user.role_id === 1) {
+          this.$router.push({name: 'studentPage'})
+        }
+        else if (response.data.user.role_id === 2){
+          this.$router.push({name: 'profile'})
+        }
+
       } catch (error) {
         if (error.response.status === 401) {
           console.log('Неверный логин или парольиус')

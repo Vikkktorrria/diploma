@@ -1,5 +1,4 @@
 <template>
-  <body>
   <div class="container-wrapper container">
     <section class="content col-lg-8 mx-auto">
 
@@ -13,12 +12,12 @@
 
 
   </div>
-  </body>
+
 </template>
 
 <script>
 
-import UserForm from "@/components/Profile/UserForm";
+import UserForm from "@/components/UserForm";
 
 export default {
 components: {
