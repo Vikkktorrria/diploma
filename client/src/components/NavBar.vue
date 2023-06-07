@@ -2,7 +2,7 @@
 
 
   <div class="exit_btn col-lg-8 mx-auto">
-    <img @click="logOut" src="../assets/exit_ico_mini.png">
+    <img @click="logOut" src="../assets/exit_ico_mini.png"><b>Выход</b>
   </div>
 
   <div  v-if="this.user.role_id === 1">
@@ -60,6 +60,7 @@ export default {
   cursor: pointer;
   text-align: right;
   width: 45%;
+  margin-bottom: 20px;
 }
 .my_nav_bar{
 

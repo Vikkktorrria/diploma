@@ -9,19 +9,20 @@
         </div>
       </div>
     </div>
-    <div class="user-num col-7 mx-auto"> <!-- элемент с номером зачётной книжки -->
+    <div class="col-7 mx-auto"> <!-- элемент с номером зачётной книжки -->
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Номер зачётной книжки студента</h5>
-          {{ this.user.record_book_number }}
+          <div class="card-title user-form">Номер зачётной книжки студента</div>
+          <label class="card_label">{{ formattedNumber  }}</label>
+
         </div>
       </div>
     </div>
-    <div class="user-email col-7 mx-auto"> <!-- элемент с почтой -->
+    <div class="col-7 mx-auto"> <!-- элемент с почтой -->
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Почта студента</h5>
-          {{ this.user.e_mail }}
+          <div class="card-title user-form">Почта студента</div>
+          <label class="card_label">{{ this.user.e_mail }}</label>
         </div>
       </div>
     </div>
@@ -38,12 +39,17 @@ export default {
     user() {
       return this.$store.getters.getUser; // Получение данных пользователя из геттера
     },
+    formattedNumber() {
+      const value = this.user.record_book_number .toString();
+      return `${value.substr(0, 2)}-${value.substr(2, 2)}-${value.substr(4)}`;
+    },
   },
   name: "user-form",
   components: {},
   mounted(){
     console.log(this.user);
   },
+
 }
 </script>
 

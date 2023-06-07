@@ -5,14 +5,14 @@ import StudentPage from "@/pages/StudentPage";
 import StudentRegistration from "@/pages/StudentRegistration";
 import DisciplinesPage from "@/pages/DisciplinePage";
 import TrajectoryPage from "@/pages/TrajectoryPage";
-import TempPage from "@/pages/TempPage";
 import SettingsPage from "@/pages/SettingsPage";
 import CompetencePage from "@/pages/CompetencePage";
+import MainPage from "@/pages/MainPage";
 
 const routes = [
     {
         path: '/',
-        component: LogIn
+        component: MainPage
     },
     {
         path: '/profile',
@@ -43,10 +43,6 @@ const routes = [
         path: '/trajectory',
         name: 'trajectory',
         component: TrajectoryPage
-    },
-    {
-        path: '/test',
-        component: TempPage
     },
     {
         path: '/settings',

@@ -1,11 +1,9 @@
 <template>
-
   <div class="app">
-    <header>
       <nav-bar v-if="isAuth"></nav-bar>
       <router-view></router-view>
-    </header>
   </div>
+
 </template>
 
 
