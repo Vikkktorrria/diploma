@@ -55,17 +55,27 @@ tbody {
     padding-bottom: 20px;
     font-size: 25px;
 }
-.card_item{
+.card_item {
     font-size: 18px;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-    /*flex-direction: row;*/
+    display: flex;
+    /*align-items: center;*/
+    justify-content: space-between;
+    margin-left: 35px;
+    margin-right: 35px;
+}
+.table_item{
+    font-size: 18px;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-left: 35px;
     margin-right: 35px;
 }
+
 .card_input{
     background-color: transparent;
     border: none;
@@ -153,6 +163,7 @@ table td {
 }
 .content_row:hover{
     background: #f6f6fc;
+
 }
 .content_row{
     font-size: 15px;

@@ -1,10 +1,10 @@
 <template>
   <div class="change_data_modal_table">
     <div class="change_data_header_table">Редактирование траектории</div>
-    <p><strong>Номер траектории:</strong><input :value="this.trajectory.trajectory_id" class="table_data_input disabled" disabled></p>
-    <p><strong>Код специальности:</strong><input :value="this.trajectory.speciality_code" class="table_data_input"></p>
-    <p><strong>Название специальности:</strong><input :value="this.trajectory.speciality_name" class="table_data_input"></p>
-    <details>
+    <p class="table_item"><strong>Номер траектории:</strong><input :value="this.trajectory.trajectory_id" class="table_data_input disabled" disabled></p>
+    <p class="table_item"><strong>Код специальности:</strong><input :value="this.trajectory.speciality_code" class="table_data_input"></p>
+    <p class="table_item"><strong>Название специальности:</strong><input :value="this.trajectory.speciality_name" class="table_data_input"></p>
+    <details class="table_item">
       <summary><strong>Дисциплины</strong></summary>
       <div
           v-for="dics in selected_disciplines"
@@ -76,5 +76,7 @@ export default {
 </script>
 
 <style scoped>
-
+strong{
+  vertical-align: bottom;
+}
 </style>

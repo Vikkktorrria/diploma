@@ -16,7 +16,7 @@
             </div>
               <div>
                 <button type="submit" class="btn">
-                  Сохранить
+                  Изменить
                 </button>
               </div>
 

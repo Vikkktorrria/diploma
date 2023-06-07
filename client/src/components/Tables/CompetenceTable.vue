@@ -1,11 +1,9 @@
 <template>
   <div class="change_data_modal_table">
     <div class="change_data_header_table">Редактирование компетенции</div>
-    <p><strong>Код компетенции:</strong><input :value="this.compenetce.competence_code" class="table_data_input disabled" disabled></p>
-    <p><strong>Тип компетенции:</strong><input :value="this.compenetce.type_name" class="table_data_input disabled" disabled></p>
-    <p><strong>Описание:</strong>
-      <textarea class="table_data_input" v-model="description"></textarea>
-    </p>
+    <p class="table_item"><strong>Код компетенции:</strong><input :value="this.compenetce.competence_code" class="table_data_input disabled" disabled></p>
+    <p class="table_item"><strong>Тип компетенции:</strong><input :value="this.compenetce.type_name" class="table_data_input disabled" disabled></p>
+    <p class="table_item"><strong>Описание:</strong><textarea class="table_data_input" v-model="description"></textarea></p>
   </div>
   <button class="btn">Сохранить</button>
 </template>

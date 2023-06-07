@@ -29,6 +29,7 @@
           v-model:show="dialogVisible"
       >
         <student-table
+            @changeData="changeStudentData"
             :student="selectedStudent"
         />
 
@@ -71,6 +72,10 @@ export default {
     showDialog(student) {
       this.dialogVisible = true;
       this.selectedStudent = student;
+    },
+    async changeStudentData(dataFromChild){
+      console.log(dataFromChild);
+
     }
 
 

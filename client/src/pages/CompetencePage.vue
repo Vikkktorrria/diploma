@@ -37,6 +37,7 @@
       </modal-window>
 
 
+
     </section>
 
 
@@ -79,7 +80,7 @@ export default {
     showDialog(compenetce) {
       this.dialogVisible = true;
       this.selectedCompetence = compenetce;
-    }
+    },
   },
   mounted(){
     this.fetchCompetences();

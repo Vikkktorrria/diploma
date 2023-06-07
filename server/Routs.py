@@ -26,31 +26,48 @@ def discipline():
         print(elective_disciplines)
         return jsonify(elective_disciplines)
     if request.method == 'POST':
+
         data_from_client = request.json
         print('данные с клиента', data_from_client)
+
+
+
         choosen_disciplines = data_from_client['disciplines']
+        print(choosen_disciplines)
 
         student_data = data_from_client['student']
         user_id = student_data['user_id']
-        rec_book_num = student_data['rec_book_num']
+        record_book_number = student_data['record_book_number']
         surname = student_data['surname']
         name = student_data['name']
         patronymic = student_data['patronymic']
         f_name = surname + name + patronymic
 
-        trajectories = dbase.get_trajectory(choosen_disciplines, user_id, rec_book_num, f_name)  # полученные траектории
+
+        dbase.set_choosen_disc(record_book_number, choosen_disciplines)
+
+        trajectories = dbase.get_trajectory(choosen_disciplines, user_id, record_book_number, f_name)  # полученные траектории
         print('полученные траектории', trajectories)
-        dbase.set_trajectories_to_student(trajectories, rec_book_num)  # добавляем траектории в бд
+        dbase.set_trajectories_to_student(trajectories, record_book_number)  # добавляем траектории в бд
+        return make_response('Всё ок', 200)
 
 
 @app.route('/trajectory/my', methods=['GET'])
-def stud_trajectories(stud_id):
+def stud_trajectories():
     if request.method == 'GET':
-        data_from_client = request.json
+        data_from_client = request.args.get('student_id')
         print('Айди пользователя для которого нужно получить траектории', data_from_client)
-        trajec = dbase.get_student_trajectories(stud_id)
+        trajec = dbase.get_student_trajectories(data_from_client)
         return jsonify(trajec)
 
+
+@app.route('/choosen_disciplines', methods=['GET'])
+def choosen_disciplines():
+    if request.method == 'GET':
+        data_from_client = request.args.get('student_id')
+        print('Айди пользователя для которого нужно получить траектории', data_from_client)
+        dist = dbase.get_choosen_dist(data_from_client)
+        return jsonify(dist)
 
 # ================================  ВСЕ ДИСЦИПЛИНЫ, КОМПЕТЕНЦИИ, ТРАЕКТОРИИ, СТУДЕНТЫ ==============================
 @app.route('/disciplines/all', methods=['GET', 'POST'])
@@ -109,7 +126,7 @@ def login():
             return jsonify({
                 'token': token,
                 'user': {
-                    'rec_book_num': user_data['record_book_number'],
+                    'record_book_number': user_data['record_book_number'],
                     'username': user_data['login'],
                     'surname': user_data['surname'],
                     'name': user_data['name'],
