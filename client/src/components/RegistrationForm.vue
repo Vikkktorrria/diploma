@@ -51,6 +51,14 @@
             placeholder="Пароль"
         >
       </div>
+      <div class="form__el">
+        <input
+            v-model="repeat_password"
+            type="password"
+            class="form__input"
+            placeholder="Повторите пароль"
+        >
+      </div>
       <div class="form__button">
         <button type="submit" class="btn"
         >
@@ -76,6 +84,7 @@ export default {
         login: '',
         password: '',
       },
+      repeat_password: '',
     }
   },
   methods: {
@@ -93,7 +102,7 @@ export default {
   color: #e74c3c;
 }
 .form__el {
-  margin-top: 25px;
+  margin-top: 20px;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;

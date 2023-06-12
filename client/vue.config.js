@@ -9,8 +9,10 @@ module.exports = {
         .use('file-loader')
         .loader('file-loader')
         .tap((options) => {
-          options.name = 'fonts/[name].[hash:8].[ext]';
-          return options;
+            // Создаем объект options, если он не определен
+            options = options || {};
+            options.name = 'fonts/[name].[hash:8].[ext]';
+            return options;
         });
   },
   configureWebpack: {

@@ -3,7 +3,7 @@
 
     <section class="content col-lg-8 mx-auto">
 
-      <log-in-form
+      <log-in-form class="log-form"
           @auth="userAuth"
       ></log-in-form>
 
@@ -71,5 +71,21 @@ export default {
 </script>
 
 <style scoped>
-
+.content{
+  width: 850px; /* Здесь вы можете указать нужную ширину */
+  height: 600px; /* Здесь вы можете указать нужную высоту */
+  border-radius: 20px; /* Здесь вы можете настроить радиус скругления */
+  background: #fcfcfc;
+  display: flex;
+  align-items: center; /* Выравнивание по вертикали */
+  flex-direction: column;
+  justify-content: flex-start;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.log-form{
+  margin-top: 130px;
+}
 </style>

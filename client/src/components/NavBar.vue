@@ -1,8 +1,8 @@
 <template>
 
 
-  <div class="exit_btn col-lg-8 mx-auto">
-    <img @click="logOut" src="../assets/exit_ico_mini.png"><b>Выход</b>
+  <div @click="logOut"  class="exit_btn col-lg-8 mx-auto">
+    <img src="../assets/exit_ico_mini.png"><b>Выход</b>
   </div>
 
   <div  v-if="this.user.role_id === 1">

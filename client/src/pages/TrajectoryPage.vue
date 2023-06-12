@@ -16,7 +16,6 @@
               <th>Номер траектории</th>
               <th>Код специальности</th>
               <th>Название специальности</th>
-              <th>Дисциплины</th>
             </tr>
             </thead>
             <tbody>
@@ -27,22 +26,6 @@
               <td>{{ trajec.trajectory_id }}</td>
               <td>{{ trajec.speciality_code }}</td>
               <td>{{ trajec.speciality_name }}</td>
-
-              <td>
-                <details>
-                  <summary><label></label></summary>
-                  <ul>
-                      <div
-                        v-for="dics in trajec.disciplines"
-                        :key="dics.discipline_code"
-                    >
-                        <li class="disciplines_list"><p>{{ dics.discipline_name}}</p></li>
-                      </div>
-                  </ul>
-
-
-              </details>
-              </td>
             </tr>
             </tbody>
           </table>
